@@ -1,11 +1,11 @@
-#Jocelyn
+# Jocelyn
 
 
 
 **Proof of Concept**
 
 
-##Introduction
+## Introduction
 
 _“Show me your friends, and I’ll show you your future.”_
 
