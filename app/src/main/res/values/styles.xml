@@ -6,6 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAnalogousAccent</item>
+        <item name="android:editTextColor">#fefefe</item>
+        <item name="android:textColorPrimary">#fefefe</item>
+        <item name="android:textColorSecondary">#fefefe</item>
+        <item name="android:textColorTertiary">#fefefe</item>
+        <item name="android:textColorPrimaryInverse">#fefefe</item>
+        <item name="android:textColorSecondaryInverse">#fefefe</item>
+        <item name="android:textColorTertiaryInverse">#fefefe</item>
+    </style>
+
+    <style name="Translucent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">#33000000</item> <!-- Or any transparency or color you need -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
 </resources>
