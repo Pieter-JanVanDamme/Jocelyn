@@ -6,6 +6,8 @@ class AddJottingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_jottings)
+        setContentView(R.layout.activity_compose_jotting)
+        setSupportActionBar(findViewById(R.id.compose_jotting_toolbar))
+        supportActionBar?.title = "Compose Jotting"
     }
 }
