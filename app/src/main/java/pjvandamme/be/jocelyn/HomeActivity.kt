@@ -14,8 +14,8 @@ class HomeActivity : AppCompatActivity() {
 
         val actionbtn: FloatingActionButton = findViewById(addJottingBtn)
         actionbtn.setOnClickListener{
-            val intent = Intent(this, AddJottingActivity::class.java)
-            startActivity(intent)
+            val composeJottingIntent = Intent(this, ComposeJottingActivity::class.java)
+            startActivity(composeJottingIntent)
         }
 
     }
