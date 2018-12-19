@@ -11,6 +11,8 @@ import pjvandamme.be.jocelyn.R
 
 class ComposeJottingActivity : AppCompatActivity() {
 
+    val mentionChar = '@'
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compose_jotting)
@@ -30,8 +32,8 @@ class ComposeJottingActivity : AppCompatActivity() {
                 val selStart: Int = editTextField.selectionStart
                 val selEnd: Int = editTextField.selectionEnd
                 var wordAtCursor: String? = getWordAtCursor(editable,selStart,selEnd).toString()
-                if (wordAtCursor!!.isNotEmpty() && wordAtCursor?.get(0)=='@') {
-                    val mentions = getMentionsIndices(editable, '@')
+                if (wordAtCursor!!.isNotEmpty() && wordAtCursor?.get(0)==mentionChar) {
+                    val mentions = getMentionsText(editable, mentionChar)
                     val after: TextView = findViewById(R.id.characterAfter)
                     after.text = mentions.toString()
                 }
@@ -158,6 +160,31 @@ class ComposeJottingActivity : AppCompatActivity() {
             position++ // update position so next mention can be found, otherwise an endless loop occurs
         }
 
+        return mentions
+    }
+
+    /**
+     * Returns all monikers used (i.e. 'mentioned') in a given editable. A moniker is mentioned by directly preceding it
+     * with a specific initial character (initChar, usually '@'). A 'mention' is the use of the initChar together with
+     * a moniker.
+     *
+     * Suppose that the editable contains the text "Hello @Jocelyn @Bob@Gary!", and the initChar were '@', then this
+     * function would return ["Jocelyn","Bob@Gary"].
+     *
+     * @param editable The editable containing the text to be searched.
+     * @param initChar The character that marks the beginning of a mention.
+     * @return A list containing the monikers of the mentions in a given editable text.
+     */
+    fun getMentionsText(editable: Editable?, initChar: Char): List<String>{
+        val searchText = editable.toString()
+        var mentions: MutableList<String> = mutableListOf()
+        var mentionText: String
+        val indices = getMentionsIndices(editable, initChar)
+        for(i in indices.indices){
+            mentionText = searchText.substring(indices[i][0]+1,indices[i][1]+1)
+            if(!mentionText.isEmpty())
+                mentions.add(i, mentionText)
+        }
         return mentions
     }
 }

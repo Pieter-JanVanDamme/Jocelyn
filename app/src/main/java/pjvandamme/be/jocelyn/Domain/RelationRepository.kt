@@ -18,4 +18,12 @@ class RelationRepository/*(private val relationDao: RelationDao)*/{
         )
         return monikers
     }
+
+    fun assignNewMoniker(relation: Relation, newMoniker: String): String {
+        val moniker = newMoniker.toLowerCase()
+        // check if moniker is already in use, if not throw error
+
+        //returns old moniker
+        return ""
+    }
 }
