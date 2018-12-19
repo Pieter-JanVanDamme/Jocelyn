@@ -3,7 +3,11 @@ package pjvandamme.be.jocelyn.Presentation
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.TextView
@@ -29,13 +33,23 @@ class ComposeJottingActivity : AppCompatActivity() {
         val editTextField: EditText = findViewById(R.id.editJottingContent)
         editTextField.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
+                // get the cursor's position
                 val selStart: Int = editTextField.selectionStart
                 val selEnd: Int = editTextField.selectionEnd
+
+                // find word at the current cursor position
                 var wordAtCursor: String? = getWordAtCursor(editable,selStart,selEnd).toString()
+
+                // determine if word at the current cursor position is a Mention
                 if (wordAtCursor!!.isNotEmpty() && wordAtCursor?.get(0)==mentionChar) {
-                    val mentions = getMentionsText(editable, mentionChar)
-                    val after: TextView = findViewById(R.id.characterAfter)
-                    after.text = mentions.toString()
+                    /* remove changedListener temporarily to prevent an infinite loop when inserting the mentionChar
+                       at the beginning of the EditText */
+                    editTextField.removeTextChangedListener(this)
+                    var newContents = applyMentionsStyling(editable, getMentionsIndices(editable, mentionChar))
+                    editTextField.setText(newContents)
+                    // return cursor to original position
+                    editTextField.setSelection(selStart)
+                    editTextField.addTextChangedListener(this)
                 }
             }
 
@@ -186,5 +200,28 @@ class ComposeJottingActivity : AppCompatActivity() {
                 mentions.add(i, mentionText)
         }
         return mentions
+    }
+
+    /**
+     * Applies the style designated for Mentions by transforming the editable into a SpannableString and
+     * applying TextAppearanceSpans to Mentions.
+     *
+     * @param editable The editable containing the text to be styled/formatted.
+     * @param mentionsIndices Indices of the Mentions that are to receive the styling/formatting.
+     * @return A SpannableString containing the styled/formatted text.
+     */
+    fun applyMentionsStyling(editable: Editable?, mentionsIndices: List<List<Int>>): SpannableString {
+        var compositionSpan = SpannableString(editable)
+
+        for(i in mentionsIndices.indices){
+            compositionSpan.setSpan(TextAppearanceSpan(
+                this,
+                R.style.MentionStyle),
+                mentionsIndices[i][0],
+                mentionsIndices[i][1]+1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
+        return compositionSpan
     }
 }

@@ -24,8 +24,9 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-    <style name="StyledMention">
-        <item name="android:textColor">@color/colorAnalogousAccent</item>
+    <style name="MentionStyle" parent="AppTheme">
+        <!-- <item name="android:textStyle">bold</item> -->
+        <item name="android:textColor">@color/colorAnalogousSupport</item>
     </style>
 
 </resources>
