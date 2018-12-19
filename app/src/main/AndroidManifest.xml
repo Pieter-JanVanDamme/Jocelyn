@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".Presentation.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".ComposeJottingActivity"
+                android:name=".Presentation.ComposeJottingActivity"
                 android:theme="@style/Translucent"
                 android:windowSoftInputMode="adjustResize">
         </activity>

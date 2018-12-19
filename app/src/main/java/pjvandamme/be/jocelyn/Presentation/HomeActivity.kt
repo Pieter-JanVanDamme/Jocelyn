@@ -1,9 +1,10 @@
-package pjvandamme.be.jocelyn
+package pjvandamme.be.jocelyn.Presentation
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
 
 class HomeActivity : AppCompatActivity() {
