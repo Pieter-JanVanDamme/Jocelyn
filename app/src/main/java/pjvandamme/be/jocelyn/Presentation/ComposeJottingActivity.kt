@@ -7,10 +7,8 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
-import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.TextView
 import pjvandamme.be.jocelyn.R
 
 class ComposeJottingActivity : AppCompatActivity() {

@@ -23,3 +23,13 @@ Romans politicians had their nomenclatores. Modern politicians have their Farley
 
 You will have Jocelyn.
 
+
+## Dictionary
+
+**Jotting**:
+
+**Moniker**:
+
+**Mention**:
+
+**Relation**:
