@@ -1,6 +1,7 @@
 <resources>
     <!-- APPLICATION -->
     <string name="app_name">Jocelyn</string>
+    <string name="monikerFormatError">Moniker can only consist of (lowercase) letters, numbers, or any of -_+*/!?@#$%&amp;. No spaces are allowed.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
