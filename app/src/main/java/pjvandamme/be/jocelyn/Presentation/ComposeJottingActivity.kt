@@ -7,28 +7,49 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import android.view.MenuItem
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import pjvandamme.be.jocelyn.Domain.Relation
+import pjvandamme.be.jocelyn.Domain.RelationRepository
 import pjvandamme.be.jocelyn.R
 
 class ComposeJottingActivity : AppCompatActivity() {
 
     val mentionChar = '@'
+    var autoCompleteTextView: AutoCompleteTextView? = null
+    //var adapter: RelationSuggestionAdapter? = null
+    var adapter: ArrayAdapter<Relation>? = null
+    var relationSuggestions: ArrayList<Relation> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compose_jotting)
         setSupportActionBar(findViewById(R.id.compose_jotting_toolbar))
-
         // change the title of the title bar
         supportActionBar?.title = "Compose Jotting"
-
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // TODO: make it so the autocompletetextview only appears when busy typing Mention
+        /*
+        relationSuggestions = populateRelationSuggestionData()
+        Log.i("pj@4", relationSuggestions.toString())
+        adapter = RelationSuggestionAdapter(this, relationSuggestions)
+        Log.i("pj@5",adapter.toString())
+        autoCompleteTextView = findViewById(R.id.editJottingAutoComplete)
+        Log.i("pj@6",R.id.editJottingAutoComplete.toString())
+        autoCompleteTextView?.setAdapter(adapter)
+        Log.i("pj@7", autoCompleteTextView?.adapter.toString())
+        */
+
         // textChangedListener implemented as anonymous inner class
         // note that when the cursor's position is changed manually, no TextChangedEvent is triggered!
-        val editTextField: EditText = findViewById(R.id.editJottingContent)
+        val editTextField: AutoCompleteTextView = findViewById(R.id.editJottingAutoComplete)
+        adapter = ArrayAdapter(this, R.layout.relation_suggestion_row, populateRelationSuggestionData())
+        editTextField.setAdapter(adapter)
         editTextField.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 // get the cursor's position
@@ -221,5 +242,9 @@ class ComposeJottingActivity : AppCompatActivity() {
         }
 
         return compositionSpan
+    }
+
+    fun populateRelationSuggestionData(): MutableList<Relation>{
+        return RelationRepository.getAllRelations()
     }
 }

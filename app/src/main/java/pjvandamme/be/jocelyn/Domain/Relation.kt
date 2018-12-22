@@ -12,10 +12,12 @@ import java.util.*
  */
 class Relation(
         val id: String,
-        // TODO: add picture, perhaps a nutshell = brief description
+        // TODO: add perhaps a nutshell = brief description
         var fullName: String,
         currentMoniker: String,
-        mentions: Long
+        mentions: Long,
+        // TODO: implement custom pictures
+        var picture: Int = -1
         // TODO: implement priority
         //var priority: Int = 4
 ){

@@ -4,20 +4,10 @@ import java.time.LocalDateTime
 import java.util.*
 
 class RelationRepository/*(private val relationDao: RelationDao)*/{
-    // todo: testing data, to be replaced with LiveData from DAO
-    val relations: List<Relation> = arrayListOf(
-        Relation("1AB", "Jan Janssens", "JanJ",5),
-        Relation("1AC", "An Nemoon", "An",15),
-        Relation("1AD", "Anton ?", "AntonTirol", 20),
-        Relation("1AE", "Ann Aerts", "Anneke", 37),
-        Relation("1AF", "Andries De Bakker", "André", 28),
-        Relation("1AE", "Antoon De Vleeschouwer", "Slagerke", 51),
-        Relation("1AF", "Anne Van Clouseau", "AlsIkJouZie", 36)
-    )
 
     // Todo: remove this and implement better methods
     companion object tester {
-        fun getAllRelations(): List<Relation> = arrayListOf(
+        fun getAllRelations(): MutableList<Relation> = arrayListOf(
             Relation("1AB", "Jan Janssens", "JanJ", 5),
             Relation("1AC", "An Nemoon", "An", 15),
             Relation("1AD", "Anton ?", "AntonTirol", 20),
@@ -29,8 +19,8 @@ class RelationRepository/*(private val relationDao: RelationDao)*/{
     }
 
     // testing data, to be replaced with call to DAO
-    fun getAllMonikers():List<String>{
-        var monikers: List<String> = arrayListOf(
+    fun getAllMonikers():ArrayList<String>{
+        var monikers: ArrayList<String> = arrayListOf(
             "Dave","Sofie","Jo","Leentje"
         )
         return monikers

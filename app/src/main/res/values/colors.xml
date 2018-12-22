@@ -11,6 +11,8 @@
     <color name="colorComplementary">#21C098</color>
     <color name="colorAnalogousSupport">#C04921</color>
     <color name="colorAnalogousAccent">#C02198</color>
+    <color name="colorRelSuggEvenBackground">#FDE4E9</color>
+    <color name="colorRelSuggOddBackground">#FEFEFE</color>
     <!-- DEFAULT COLOURS
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
