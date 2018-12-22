@@ -7,11 +7,9 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
-import android.util.Log
 import android.view.MenuItem
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.TextView
 import pjvandamme.be.jocelyn.Domain.Relation
 import pjvandamme.be.jocelyn.Domain.RelationRepository
 import pjvandamme.be.jocelyn.R
@@ -19,10 +17,7 @@ import pjvandamme.be.jocelyn.R
 class ComposeJottingActivity : AppCompatActivity() {
 
     val mentionChar = '@'
-    var autoCompleteTextView: AutoCompleteTextView? = null
-    //var adapter: RelationSuggestionAdapter? = null
-    var adapter: ArrayAdapter<Relation>? = null
-    var relationSuggestions: ArrayList<Relation> = arrayListOf()
+    val relationRepository: RelationRepository = RelationRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,23 +28,9 @@ class ComposeJottingActivity : AppCompatActivity() {
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // TODO: make it so the autocompletetextview only appears when busy typing Mention
-        /*
-        relationSuggestions = populateRelationSuggestionData()
-        Log.i("pj@4", relationSuggestions.toString())
-        adapter = RelationSuggestionAdapter(this, relationSuggestions)
-        Log.i("pj@5",adapter.toString())
-        autoCompleteTextView = findViewById(R.id.editJottingAutoComplete)
-        Log.i("pj@6",R.id.editJottingAutoComplete.toString())
-        autoCompleteTextView?.setAdapter(adapter)
-        Log.i("pj@7", autoCompleteTextView?.adapter.toString())
-        */
-
         // textChangedListener implemented as anonymous inner class
         // note that when the cursor's position is changed manually, no TextChangedEvent is triggered!
-        val editTextField: AutoCompleteTextView = findViewById(R.id.editJottingAutoComplete)
-        adapter = ArrayAdapter(this, R.layout.relation_suggestion_row, populateRelationSuggestionData())
-        editTextField.setAdapter(adapter)
+        val editTextField: EditText = findViewById(R.id.editJottingContent)
         editTextField.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(editable: Editable?) {
                 // get the cursor's position
@@ -58,17 +39,24 @@ class ComposeJottingActivity : AppCompatActivity() {
 
                 // find word at the current cursor position
                 var wordAtCursor: String? = getWordAtCursor(editable,selStart,selEnd).toString()
+                var relationTextView: TextView = findViewById(R.id.relationSuggestions)
 
                 // determine if word at the current cursor position is a Mention
                 if (wordAtCursor!!.isNotEmpty() && wordAtCursor?.get(0)==mentionChar) {
-                    /* remove changedListener temporarily to prevent an infinite loop when inserting the mentionChar
-                       at the beginning of the EditText */
-                    editTextField.removeTextChangedListener(this)
+                    /* APPLY STYLING */
+                    editTextField.removeTextChangedListener(this) // prevent infinite loop
                     var newContents = applyMentionsStyling(editable, getMentionsIndices(editable, mentionChar))
                     editTextField.setText(newContents)
                     // return cursor to original position
                     editTextField.setSelection(selStart)
                     editTextField.addTextChangedListener(this)
+
+                    /* SUGGESTIONS LIST */
+                    var searchString: String = wordAtCursor.removePrefix("@")
+                    relationTextView.text = relationRepository.getMentionSuggestions(searchString).toString()
+                }
+                else{
+                    relationTextView.text = ""
                 }
             }
 
@@ -242,9 +230,5 @@ class ComposeJottingActivity : AppCompatActivity() {
         }
 
         return compositionSpan
-    }
-
-    fun populateRelationSuggestionData(): MutableList<Relation>{
-        return RelationRepository.getAllRelations()
     }
 }

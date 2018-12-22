@@ -4,7 +4,7 @@
     <solid
             android:color="@color/colorBackground" />
     <stroke
-            android:width="@dimen/accentBorder"
+            android:width="@dimen/text_margin"
             android:color="@color/colorPrimaryVeryLight" />
     <corners
             android:topLeftRadius="15dp"/>

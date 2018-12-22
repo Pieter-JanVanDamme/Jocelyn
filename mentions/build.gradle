@@ -1,0 +1,81 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'jacoco'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group 'com.percolate.mentions'
+version '1.0-SNAPSHOT'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 10
+        versionName "0.1.0"
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled false
+        }
+    }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+jacoco {
+    version = '0.7.6.201602180812'
+}
+
+task coverage(type:JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = 'Create code coverage report for library.'
+
+    classDirectories = fileTree(
+            dir: "$buildDir/intermediates/classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       'com/percolate/mentions/CharSequenceUtils.class',
+                       'com/percolate/mentions/StringUtils.class']
+    )
+
+    sourceDirectories = files("src/main/java")
+    executionData = files("build/jacoco/testDebugUnitTest.exec")
+
+    reports {
+        //noinspection GroovyAssignabilityCheck
+        xml.enabled = true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.3.1'
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile 'org.mockito:mockito-core:2.8.9'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
