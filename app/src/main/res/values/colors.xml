@@ -2,9 +2,9 @@
 <resources>
     <!-- Generated using Material Design's Color palettes tool
           c02148 as primary color, ffffff as secondary color -->
-    <color name="colorBackground">#33333D</color>
+    <color name="colorBackground">#33333d</color>
     <color name="colorBackgroundLighter">#64646f</color>
-    <color name="colorText">#FEFEFE</color>
+    <color name="colorText">#34343e</color>
     <color name="colorPrimary">#C02148</color>
     <color name="colorPrimaryDark">#891040</color>
     <color name="colorPrimaryLight">#F1637F</color>

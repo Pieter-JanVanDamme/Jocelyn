@@ -11,17 +11,19 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" android:background="@color/colorPrimary"/>
+            android:theme="?attr/actionBarTheme"
+            android:background="@color/colorPrimary"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editJottingContent" android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/editJottingContent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintTop_toBottomOf="@+id/compose_jotting_toolbar" android:layout_marginTop="8dp"
-            android:importantForAutofill="no"/>
+            android:importantForAutofill="no" android:textColor="@color/colorText"/>
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp" android:id="@+id/relationSuggestContainer"

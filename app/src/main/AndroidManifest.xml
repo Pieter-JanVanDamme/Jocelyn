@@ -18,7 +18,7 @@
         </activity>
         <activity
                 android:name=".Presentation.ComposeJottingActivity"
-                android:theme="@style/Translucent"
+                android:theme="@style/AppTheme"
                 android:windowSoftInputMode="adjustResize">
         </activity>
     </application>

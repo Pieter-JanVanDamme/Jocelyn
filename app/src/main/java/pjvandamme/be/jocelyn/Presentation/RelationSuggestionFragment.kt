@@ -13,7 +13,6 @@ import pjvandamme.be.jocelyn.Domain.Relation
 import pjvandamme.be.jocelyn.Domain.RelationRepository
 import pjvandamme.be.jocelyn.R
 
-import pjvandamme.be.jocelyn.Presentation.dummy.DummyContent
 
 /**
  * A fragment representing a list of Items.

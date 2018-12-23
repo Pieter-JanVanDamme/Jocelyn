@@ -36,6 +36,11 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         val fragMan: FragmentManager = this.supportFragmentManager
         var fragTrans: FragmentTransaction
 
+        // remove a RelationSuggestionFragment if it already exists to prevent multiple instances
+        val frag = fragMan.findFragmentById(R.id.relationSuggestContainer)
+        if(frag != null)
+            fragMan.beginTransaction().remove(frag).commit()
+
         // textChangedListener implemented as anonymous inner class
         // note that when the cursor's position is changed manually, no TextChangedEvent is triggered!
         val editTextField: EditText = findViewById(R.id.editJottingContent)
@@ -98,11 +103,23 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         return true
     }
 
+    // callback for the RelationSuggestionFragment containing a recyclerview
     override fun onListFragmentInteraction(relation: Relation?) {
+
         val editTextField: EditText = findViewById(R.id.editJottingContent)
-        val selStart: Int = editTextField.selectionStart
-        val selEnd: Int = editTextField.selectionEnd
+
+        // insert the mention for the relation selected
+        var selStart: Int = editTextField.selectionStart
+        var selEnd: Int = editTextField.selectionEnd
         replaceWordAtCursor(editTextField, relation?.currentMoniker, selStart, selEnd)
+
+        // apply style
+        selStart = editTextField.selectionStart
+        var newContents = applyMentionsStyling(editTextField.text, getMentionsIndices(editTextField.text, mentionChar))
+        editTextField.setText(newContents)
+
+        // reset selection
+        editTextField.setSelection(selStart)
     }
 
     /**
@@ -261,7 +278,7 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         return compositionSpan
     }
 
-    fun replaceWordAtCursor(editText: EditText, replacement: String?, selStart: Int, selEnd: Int){
+    fun replaceWordAtCursor(editText: EditText, replacement: String?, selStart: Int, selEnd: Int) {
         if(!replacement.isNullOrBlank() && selStart == selEnd){
             var descendingIndex = selStart-1
             var ascendingIndex = selStart
