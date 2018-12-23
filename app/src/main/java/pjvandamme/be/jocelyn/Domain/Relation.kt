@@ -21,8 +21,8 @@ class Relation(
         // TODO: implement priority
         //var priority: Int = 4
 ){
-    var currentMoniker = currentMoniker
-        private set(value) { /* cannot directly set new Moniker, see RelationRepository */}
+    var currentMoniker = currentMoniker.toLowerCase()
+        private set(value) { /* */ }
 
     var mentions  = mentions
         private set(value) { /* impossible to directly set value */}

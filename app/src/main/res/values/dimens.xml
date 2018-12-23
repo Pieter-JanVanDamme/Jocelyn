@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="relsugg_listcont_height">20dp</dimen>
+    <dimen name="relsugg_listcont_height">30dp</dimen>
+    <dimen name="relsugg_listcont_pictureheight">20dp</dimen>
     <dimen name="relsugg_listcont_namewidth">250dp</dimen>
     <dimen name="relsugg_listcont_namemargin">5dp</dimen>
     <dimen name="relsugg_listcont_margin">5dp</dimen>
+    <dimen name="relsugg_list_width">310dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="accent_stroke">1dp</dimen>
+    <dimen name="accent_padding">5dp</dimen>
 </resources>

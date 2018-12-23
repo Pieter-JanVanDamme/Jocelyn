@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.relationsuggestion_list_content.view.*
+import kotlinx.android.synthetic.main.fragment_relationsuggestion.view.*
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.Presentation.RelationSuggestionFragment.OnListFragmentInteractionListener
 import pjvandamme.be.jocelyn.Domain.Relation
@@ -34,7 +34,7 @@ class MyRelationSuggestionRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.relationsuggestion_list_content, parent, false)
+            .inflate(R.layout.fragment_relationsuggestion, parent, false)
         return ViewHolder(view)
     }
 

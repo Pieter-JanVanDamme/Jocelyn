@@ -2,6 +2,7 @@ package pjvandamme.be.jocelyn.Presentation
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.text.Editable
@@ -89,6 +90,7 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
             }
         })
     }
+
 
     // implement functionality of 'Back button' in the title bar, i.e. return to previous activity
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

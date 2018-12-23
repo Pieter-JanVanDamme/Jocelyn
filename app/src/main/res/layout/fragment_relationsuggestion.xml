@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="30dp">
 
-    <TextView
-            android:id="@+id/item_number"
+    <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"/>
+            android:layout_height="@dimen/relsugg_listcont_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingBottom="@dimen/relsugg_listcont_margin" android:background="@color/colorBackgroundLighter">
 
-    <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"/>
-</LinearLayout>
+        <ImageView
+                android:layout_height="@dimen/relsugg_listcont_pictureheight"
+                android:id="@+id/suggestionPicture"
+                android:layout_width="@dimen/relsugg_listcont_pictureheight" app:srcCompat="@drawable/_default"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="@dimen/relsugg_listcont_namewidth"
+                android:layout_height="@dimen/relsugg_listcont_height" android:id="@+id/suggestionName"
+                android:paddingRight="@dimen/relsugg_listcont_namemargin"
+                android:paddingLeft="@dimen/relsugg_listcont_namemargin"
+                android:background="@color/colorBackgroundLighter"/>
+        <ImageButton
+                android:layout_height="@dimen/relsugg_listcont_height"
+                android:id="@+id/suggestionBtn" android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_view" android:background="@color/colorBackgroundLighter"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

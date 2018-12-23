@@ -3,12 +3,14 @@
     <!-- Generated using Material Design's Color palettes tool
           c02148 as primary color, ffffff as secondary color -->
     <color name="colorBackground">#33333D</color>
+    <color name="colorBackgroundLighter">#64646f</color>
     <color name="colorText">#FEFEFE</color>
     <color name="colorPrimary">#C02148</color>
     <color name="colorPrimaryDark">#891040</color>
     <color name="colorPrimaryLight">#F1637F</color>
     <color name="colorPrimaryVeryLight">#FDE4E9</color>
     <color name="colorComplementary">#21C098</color>
+    <color name="colorComplementaryLight">#DDF4EE</color>
     <color name="colorAnalogousSupport">#C04921</color>
     <color name="colorAnalogousAccent">#C02198</color>
     <color name="colorRelSuggEvenBackground">#FDE4E9</color>
