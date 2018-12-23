@@ -2,6 +2,8 @@ package pjvandamme.be.jocelyn.Presentation
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
@@ -9,14 +11,15 @@ import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.TextView
 import pjvandamme.be.jocelyn.Domain.Relation
 import pjvandamme.be.jocelyn.Domain.RelationRepository
 import pjvandamme.be.jocelyn.R
 
-class ComposeJottingActivity : AppCompatActivity() {
+class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.OnListFragmentInteractionListener {
 
     val mentionChar = '@'
+
+    var relationSuggestionFragment = RelationSuggestionFragment()
     val relationRepository: RelationRepository = RelationRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,10 @@ class ComposeJottingActivity : AppCompatActivity() {
         supportActionBar?.title = "Compose Jotting"
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // initialize fragmentmanager for the relationSuggestionFragment
+        val fragMan: FragmentManager = this.supportFragmentManager
+        var fragTrans: FragmentTransaction
 
         // textChangedListener implemented as anonymous inner class
         // note that when the cursor's position is changed manually, no TextChangedEvent is triggered!
@@ -39,7 +46,6 @@ class ComposeJottingActivity : AppCompatActivity() {
 
                 // find word at the current cursor position
                 var wordAtCursor: String? = getWordAtCursor(editable,selStart,selEnd).toString()
-                var relationTextView: TextView = findViewById(R.id.relationSuggestions)
 
                 // determine if word at the current cursor position is a Mention
                 if (wordAtCursor!!.isNotEmpty() && wordAtCursor?.get(0)==mentionChar) {
@@ -52,11 +58,25 @@ class ComposeJottingActivity : AppCompatActivity() {
                     editTextField.addTextChangedListener(this)
 
                     /* SUGGESTIONS LIST */
-                    var searchString: String = wordAtCursor.removePrefix("@")
-                    relationTextView.text = relationRepository.getMentionSuggestions(searchString).toString()
+                    // set the searchString as argument for the fragment to use
+                    var searchString: String = wordAtCursor.removePrefix(mentionChar.toString())
+                    var fragmentArguments: Bundle = Bundle()
+                    fragmentArguments.putString("searchString", searchString)
+
+                    fragTrans = fragMan.beginTransaction()
+                    // remove the previously added fragment, if any
+                    fragTrans.remove(relationSuggestionFragment)
+                    // create the new fragment and set the Bundle containing the searchString as its arguments
+                    relationSuggestionFragment = RelationSuggestionFragment()
+                    relationSuggestionFragment.arguments = fragmentArguments
+                    // add the fragment to the given view
+                    fragTrans.add(R.id.relationSuggestContainer, relationSuggestionFragment)
+                    fragTrans.commit()
                 }
                 else{
-                    relationTextView.text = ""
+                    fragTrans = fragMan.beginTransaction()
+                    fragTrans.remove(relationSuggestionFragment)
+                    fragTrans.commit()
                 }
             }
 
@@ -74,6 +94,13 @@ class ComposeJottingActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         finish()
         return true
+    }
+
+    override fun onListFragmentInteraction(relation: Relation?) {
+        val editTextField: EditText = findViewById(R.id.editJottingContent)
+        val selStart: Int = editTextField.selectionStart
+        val selEnd: Int = editTextField.selectionEnd
+        replaceWordAtCursor(editTextField, relation?.currentMoniker, selStart, selEnd)
     }
 
     /**
@@ -230,5 +257,44 @@ class ComposeJottingActivity : AppCompatActivity() {
         }
 
         return compositionSpan
+    }
+
+    fun replaceWordAtCursor(editText: EditText, replacement: String?, selStart: Int, selEnd: Int){
+        if(!replacement.isNullOrBlank() && selStart == selEnd){
+            var descendingIndex = selStart-1
+            var ascendingIndex = selStart
+            var text = editText.text.toString()
+            var currentChar = 'a' // random character
+
+            while(descendingIndex >= 0 && currentChar != ' ' ){
+                currentChar = text[descendingIndex--]
+            }
+
+            currentChar = 'a' // reset value
+            while(ascendingIndex < text.length && currentChar != ' '){
+                currentChar = text[ascendingIndex++]
+            }
+
+            // descendingIndex+2? first: because we decrement one too many times (after finding the space or boundary)
+            // second: because the second parameter of subSequence is exclusive
+            descendingIndex += 2
+
+            var builder = StringBuilder()
+            // only in case the mention is preceded by one or more characters, does it make sense to prepend
+            if(descendingIndex != 1)
+                builder.append(text.subSequence(0,descendingIndex))
+            // in case the mention is at the beginning of the editable, we need to decrement the descendingIndex
+            // so the selection is not placed out of bounds
+            else
+                descendingIndex--
+            builder.append(mentionChar)
+            builder.append(replacement)
+            builder.append(" ")
+            builder.append(text.subSequence(ascendingIndex, text.length))
+
+            editText.setText(builder.toString())
+            // +2? once for the appended mentionChar, once for the appended space
+            editText.setSelection(descendingIndex+2+replacement.length)
+        }
     }
 }

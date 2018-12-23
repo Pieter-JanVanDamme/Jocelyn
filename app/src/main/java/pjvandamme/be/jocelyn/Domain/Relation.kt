@@ -17,7 +17,7 @@ class Relation(
         currentMoniker: String,
         mentions: Long,
         // TODO: implement custom pictures
-        var picture: Int = -1
+        var picture: String = "_default"
         // TODO: implement priority
         //var priority: Int = 4
 ){

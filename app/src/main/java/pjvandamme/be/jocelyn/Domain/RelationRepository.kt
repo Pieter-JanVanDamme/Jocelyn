@@ -6,6 +6,7 @@ import java.util.*
 
 class RelationRepository/*(private val relationDao: RelationDao)*/{
 
+    val mentionSuggestionsLimit = 10
     var testdata: List<Relation> = listOf(
         Relation("1AB", "Jan Janssens", "JanJ", 5),
         Relation("1AC", "An Nemoon", "An", 15),
@@ -18,31 +19,25 @@ class RelationRepository/*(private val relationDao: RelationDao)*/{
 
     // TODO: implement database-solution
     // TODO: lambda's
-    fun getMentionSuggestions(start: String): List<String> {
-        Log.i("@pj start",start)
+    fun getMentionSuggestions(start: String): List<Relation> {
         var matches: MutableList<Relation> = mutableListOf()
-        var sorted: List<Relation> = listOf()
-        var result: MutableList<String> = mutableListOf()
+        var sorted: List<Relation>
 
         // find matches
         for(rel: Relation in testdata){
-            if(rel.currentMoniker.startsWith(start, true) || rel.fullName.startsWith(start, true))
-                matches.add(rel)
+            if(rel.currentMoniker.startsWith(start, true) || rel.fullName.startsWith(start, true)) {
+                // assure that full matches get to the top of the list
+                if(rel.currentMoniker.toLowerCase() == start || rel.fullName.toLowerCase() == start)
+                    matches.add(0, rel)
+                else
+                    matches.add(rel)
+            }
         }
 
-        // sort matches
-        sorted = matches.sortedWith(compareByDescending{it.mentions})
+        // sort matches and limit to the top x mentionSuggestions
+        sorted = matches.sortedWith(compareByDescending{it.mentions}).take(mentionSuggestionsLimit)
 
-        // map relations to their suggestionNames
-        for(rel: Relation in sorted){
-            // assure that full matches get to the top of the list
-            if(rel.currentMoniker.toLowerCase() == start || rel.fullName.toLowerCase() == start)
-                result.add(0, rel.getSuggestionName())
-            else
-                result.add(rel.getSuggestionName())
-        }
-
-        return result
+        return sorted
     }
 
     // testing data, to be replaced with call to DAO
@@ -62,6 +57,7 @@ class RelationRepository/*(private val relationDao: RelationDao)*/{
         return oldMoniker
     }
 
+    // todo: testen
     fun validateMoniker(candidate: String) {
         val regex = Regex("[-_+*/!?@#$%&a-zA-Z0-9]+")
         if(regex.matches(candidate))
