@@ -2,7 +2,7 @@ package pjvandamme.be.jocelyn.Presentation
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.text.Editable
@@ -12,16 +12,18 @@ import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.widget.EditText
-import pjvandamme.be.jocelyn.Domain.Relation
-import pjvandamme.be.jocelyn.Domain.RelationRepository
+import pjvandamme.be.jocelyn.Domain.Models.Jotting
+import pjvandamme.be.jocelyn.Domain.Models.Mention
+import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.R
+import java.util.*
 
 class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.OnListFragmentInteractionListener {
 
     val mentionChar = '@'
 
     var relationSuggestionFragment = RelationSuggestionFragment()
-    val relationRepository: RelationRepository = RelationRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +43,8 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         if(frag != null)
             fragMan.beginTransaction().remove(frag).commit()
 
+        /* TEXT CHANGED LISTENER */
+        /* ********************* */
         // textChangedListener implemented as anonymous inner class
         // note that when the cursor's position is changed manually, no TextChangedEvent is triggered!
         val editTextField: EditText = findViewById(R.id.editJottingContent)
@@ -66,7 +70,7 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
                     /* SUGGESTIONS LIST */
                     // set the searchString as argument for the fragment to use
                     var searchString: String = wordAtCursor.removePrefix(mentionChar.toString())
-                    var fragmentArguments: Bundle = Bundle()
+                    var fragmentArguments = Bundle()
                     fragmentArguments.putString("searchString", searchString)
 
                     fragTrans = fragMan.beginTransaction()
@@ -94,6 +98,32 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
                 // do nothing
             }
         })
+
+        /* ACTION BUTTON PRESSED LISTENER */
+        /* ****************************** */
+        val actionbtn: FloatingActionButton = findViewById(R.id.submitJottingBtn)
+        actionbtn.setOnClickListener{
+
+            /*
+            var mentionStrings: List<String> = getMentionsText(editTextField.text, mentionChar)
+            var mentions: MutableList<Mention> = mutableListOf()
+
+            for(mention in mentionStrings){
+                val rel = relationRepository.getByMoniker(mention)
+                if(rel != null)
+                    mentions[mention] = rel
+                // TODO: prompt creation of new relation if moniker was not found
+            }
+
+            // TODO: provide error if no mention was given
+
+            // create jotting?
+
+            val testJottingTxt: android.widget.TextView = findViewById(R.id.testJottingTxt)
+            testJottingTxt.text = jotting.toString()
+            */
+
+        }
     }
 
 

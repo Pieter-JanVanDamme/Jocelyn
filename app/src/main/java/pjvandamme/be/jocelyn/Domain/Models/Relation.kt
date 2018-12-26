@@ -1,6 +1,10 @@
-package pjvandamme.be.jocelyn.Domain
+package pjvandamme.be.jocelyn.Domain.Models
 
 import java.util.*
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Index
+import android.arch.persistence.room.PrimaryKey
 
 /**
  *  The Relation class
@@ -10,26 +14,17 @@ import java.util.*
  *  @param mentions The amount of times this Relation was mentioned in Jottings, helps determine closeness.
  *  todo: complete docs
  */
+@Entity(indices = [Index("currentMoniker"), Index("relationId"), Index("fullName")])
 class Relation(
-        val id: String,
+        @PrimaryKey(autoGenerate = true) var relationId: Long,
         // TODO: add perhaps a nutshell = brief description
-        var fullName: String,
-        currentMoniker: String,
-        mentions: Long,
+        @ColumnInfo(name = "fullName")var fullName: String,
+        @ColumnInfo(name = "currentMoniker") var currentMoniker: String,
+        @ColumnInfo(name = "mentions") var mentions: Long,
         // TODO: implement custom pictures
         var picture: String = "_default"
         // TODO: implement priority
         //var priority: Int = 4
 ){
-    var currentMoniker = currentMoniker.toLowerCase()
-        private set(value) { /* */ }
-
-    var mentions  = mentions
-        private set(value) { /* impossible to directly set value */}
-
-    fun updateMentions(){
-        mentions++
-    }
-
     fun getSuggestionName(): String = "$fullName ($currentMoniker)"
 }
