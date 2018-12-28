@@ -23,9 +23,9 @@ class JottingRepository(application: Application){
     }
 
     @WorkerThread
-    fun insert(jotting: Jotting){
+    fun insert(jotting: Jotting): Long{
         // only local database implemented at the moment; TODO: implement fetching data from network
-        jottingDao.insert(jotting)
+        return jottingDao.insert(jotting)
     }
 
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: JottingDao):

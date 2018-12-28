@@ -67,7 +67,6 @@ class RelationSuggestionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_relationsuggestion_list, container, false)
         viewAdapter = MyRelationSuggestionRecyclerViewAdapter(listener)
-        Log.i("@pj4", "viewAdapter: " + viewAdapter.toString())
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -82,9 +81,6 @@ class RelationSuggestionFragment : Fragment() {
         return view
     }
 
-
-
-    /*****************************************************************************************************************/
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

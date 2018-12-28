@@ -87,7 +87,6 @@ abstract class JocelynDatabase: RoomDatabase() {
                 rDao.insert(rel)
             }
 
-            /*
             var jottings: List<Jotting> = listOf(
                 Jotting(
                     0,
@@ -102,18 +101,17 @@ abstract class JocelynDatabase: RoomDatabase() {
             )
             for(jot in jottings) {
                 jDao.insert(jot)
-            }*/
+            }
 
-            /*
             var mentions: List<Mention> = listOf(
-                Mention(0,1,1,1),
-                Mention(0,2,7,1),
-                Mention(0,2,5,2),
-                Mention(0,2,2,3)
+                Mention(0,1,1),
+                Mention(0,2,7),
+                Mention(0,2,5),
+                Mention(0,2,2)
             )
             for(men in mentions) {
                 mDao.insert(men)
-            }*/
+            }
 
             return null
         }

@@ -10,7 +10,7 @@ import java.util.*
 @Dao
 interface JottingDao{
     @Insert
-    fun insert(jotting: Jotting)
+    fun insert(jotting: Jotting): Long
 
     @Query("SELECT * FROM jotting ORDER BY jottingId DESC")
     fun getAllJottings(): LiveData<List<Jotting>>

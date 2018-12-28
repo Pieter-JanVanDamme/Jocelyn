@@ -11,7 +11,7 @@ import java.util.*
 
 class RelationRepository(application: Application){
     private val relationDao: RelationDao
-    private val relations: LiveData<List<Relation>>
+    val relations: LiveData<List<Relation>>
 
     init {
         val jocelynRoomDatabase = JocelynDatabase.getJocelynDatabase(application)
@@ -21,7 +21,12 @@ class RelationRepository(application: Application){
 
     @WorkerThread
     fun getAllRelations(): LiveData<List<Relation>>{
-        return relations
+        return relationDao.getAllRelations()
+    }
+
+    @WorkerThread
+    fun getByCurrentMoniker(moniker: String): LiveData<Relation>{
+        return relationDao.getRelationByMoniker(moniker)
     }
 
     @WorkerThread

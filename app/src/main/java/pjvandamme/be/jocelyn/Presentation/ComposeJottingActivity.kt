@@ -1,5 +1,6 @@
 package pjvandamme.be.jocelyn.Presentation
 
+import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -13,17 +14,26 @@ import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.widget.EditText
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
-import pjvandamme.be.jocelyn.Domain.Models.Mention
 import pjvandamme.be.jocelyn.Domain.Models.Relation
-import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
+import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.R
 import java.util.*
 
+/**
+ * The compose jotting activity, which allows the user to draft a new jotting and insert Mentions as needed.
+ * The activity will style these mentions to make them stand out.
+ * The activity will also call on RelationSuggestionFragment to make suggestions when the user is typing Mentions (which
+ * start with the 'mention character' (usually '@').
+ *
+ * @property mentionChar The character that, if it appears word-initially, signals a Mention.
+ * @property relationSuggestionFragment The fragment responsible for showing suggestions when the user is typing a Mention.
+ */
 class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.OnListFragmentInteractionListener {
 
     val mentionChar = '@'
-
     var relationSuggestionFragment = RelationSuggestionFragment()
+    var composeJottingViewModel: ComposeJottingViewModel? = null
+    var allRelations: List<Relation>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +44,10 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // initialize fragmentmanager for the relationSuggestionFragment
+        // initialize ComposeJottingViewModel
+        composeJottingViewModel = ComposeJottingViewModel(this.application)
+
+        // initialize fragmentmanager
         val fragMan: FragmentManager = this.supportFragmentManager
         var fragTrans: FragmentTransaction
 
@@ -42,6 +55,7 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         val frag = fragMan.findFragmentById(R.id.relationSuggestContainer)
         if(frag != null)
             fragMan.beginTransaction().remove(frag).commit()
+
 
         /* TEXT CHANGED LISTENER */
         /* ********************* */
@@ -99,30 +113,37 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
             }
         })
 
+
         /* ACTION BUTTON PRESSED LISTENER */
         /* ****************************** */
+        /* Action button triggers saving the new Jotting and finishing the activity. */
+
         val actionbtn: FloatingActionButton = findViewById(R.id.submitJottingBtn)
         actionbtn.setOnClickListener{
+            var mentionedRelations: MutableList<Relation>? = mutableListOf()
+            val monikersUsed: List<String> = getMentionsText(editTextField.text, mentionChar)
 
-            /*
-            var mentionStrings: List<String> = getMentionsText(editTextField.text, mentionChar)
-            var mentions: MutableList<Mention> = mutableListOf()
+            // create observer
+            var relationsObserver = Observer<List<Relation>> { relationsList ->
+                // get a list of all relations, to filter in the next step
+                this.allRelations = relationsList
 
-            for(mention in mentionStrings){
-                val rel = relationRepository.getByMoniker(mention)
-                if(rel != null)
-                    mentions[mention] = rel
-                // TODO: prompt creation of new relation if moniker was not found
+                // filter relations according to mentions in the jotting
+                var relationsInJotting: List<Relation>? = null
+                if(allRelations != null){
+                    // this lambda checks, for every Relation available, if its currentMoniker matches ANY in the list of
+                    // monikers from the Jotting
+                    relationsInJotting = allRelations?.filter{ p -> monikersUsed.any{ it == p.currentMoniker }}
+                    composeJottingViewModel?.addNewJotting(
+                        Jotting(0, Calendar.getInstance().time,editTextField.text.toString()),
+                        relationsInJotting)
+                }
             }
 
-            // TODO: provide error if no mention was given
+            // observe ViewModel to get all relations
+            composeJottingViewModel?.relations?.observe(this, relationsObserver)
 
-            // create jotting?
-
-            val testJottingTxt: android.widget.TextView = findViewById(R.id.testJottingTxt)
-            testJottingTxt.text = jotting.toString()
-            */
-
+            this.finish()
         }
     }
 
@@ -308,6 +329,16 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         return compositionSpan
     }
 
+    /**
+     * Replaces the word found at the given cursor position with the given replacement String in the given EditText.
+     * A word is any string of characters between spaces (or the boundaries of the EditText). The cursor position cannot
+     * be a selection, i.e. the start and the end of the selection have to be the same position.
+     *
+     * @param editText The EditText containing the word to be replaced.
+     * @param replacement The word to be inserted instead of the word at the cursor position.
+     * @param selStart Starting index of the selection/cursor position.
+     * @param selEnd Ending index of the selection/cursor position.
+     */
     fun replaceWordAtCursor(editText: EditText, replacement: String?, selStart: Int, selEnd: Int) {
         if(!replacement.isNullOrBlank() && selStart == selEnd){
             var descendingIndex = selStart-1
@@ -346,4 +377,5 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
             editText.setSelection(descendingIndex+2+replacement.length)
         }
     }
+
 }
