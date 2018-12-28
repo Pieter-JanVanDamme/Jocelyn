@@ -4,12 +4,16 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.FloatingActionButton
+import android.widget.ImageView
 import android.widget.TextView
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
+import android.view.View
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -17,7 +21,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        /* TESTING THE INSERTION */
+        val logoView: ImageView = findViewById(R.id.logoView)
+        logoView.bringToFront()
+
+        /* TESTING THE INSERTION **************************************************************************************/
         val composeJottingViewModel = ComposeJottingViewModel(this.application)
 
         var jottingsObserver = Observer<List<Jotting>> { jottingsList ->
@@ -33,11 +40,22 @@ class HomeActivity : AppCompatActivity() {
 
         composeJottingViewModel?.jottings?.observe(this, jottingsObserver)
 
+        /* ************************************************************************************************************/
+
         val actionbtn: FloatingActionButton = findViewById(addJottingBtn)
         actionbtn.setOnClickListener{
             val composeJottingIntent = Intent(this, ComposeJottingActivity::class.java)
             startActivity(composeJottingIntent)
         }
 
+    }
+
+    override fun onStart(){
+        super.onStart()
+        val logoView: ImageView = findViewById(R.id.logoView)
+        // Handler allows us to send/process runnables with the thread's MessageQueue
+        Handler().postDelayed({
+            logoView.visibility = View.INVISIBLE
+        }, 3000)
     }
 }
