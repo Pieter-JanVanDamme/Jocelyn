@@ -1,6 +1,7 @@
 package pjvandamme.be.jocelyn.Presentation
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,9 @@ import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
 import android.view.View
+import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
+import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
 
 
 class HomeActivity : AppCompatActivity() {
@@ -25,20 +29,22 @@ class HomeActivity : AppCompatActivity() {
         logoView.bringToFront()
 
         /* TESTING THE INSERTION **************************************************************************************/
-        val composeJottingViewModel = ComposeJottingViewModel(this.application)
+        val relationSuggestionViewModel = ViewModelProviders
+            .of(this, RelationSuggestionViewModelFactory(this.application, ""))
+            .get(RelationSuggestionViewModel::class.java)
 
-        var jottingsObserver = Observer<List<Jotting>> { jottingsList ->
+        var relationsObserver = Observer<List<Relation>> { relationList ->
             val test: TextView = findViewById(testView)
             var all: String = ""
-            if(jottingsList != null) {
-                for (jot in jottingsList) {
-                    all += jot.jottingId.toString() + " " + jot.created + " " + jot.content + "\n\n"
+            if(relationList != null) {
+                for (rel in relationList) {
+                    all += rel.getSuggestionName() + " mentions: " + rel.mentions
                 }
             }
             test.text = all
         }
 
-        composeJottingViewModel?.jottings?.observe(this, jottingsObserver)
+        relationSuggestionViewModel?.suggestedRelations?.observe(this, relationsObserver)
 
         /* ************************************************************************************************************/
 

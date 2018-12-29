@@ -25,6 +25,11 @@ class RelationRepository(application: Application){
     }
 
     @WorkerThread
+    fun update(relation: Relation) {
+        relationDao.update(relation)
+    }
+
+    @WorkerThread
     fun getByCurrentMoniker(moniker: String): LiveData<Relation>{
         return relationDao.getRelationByMoniker(moniker)
     }

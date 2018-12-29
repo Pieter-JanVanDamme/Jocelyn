@@ -33,7 +33,7 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
     fun addNewJotting(jotting: Jotting, mentions: List<Relation>?) {
         // call a specialized asynctask to handle the insertion of the new Jotting, and the creation and insertion of
         // the required Mention objects. This operation cannot be performed on the main thread to avoid locking the UI.
-        AddNewJottingAsyncTask(jottingRepository, mentionRepository, mentions).execute(jotting)
+        AddNewJottingAsyncTask(jottingRepository, mentionRepository, relationRepository, mentions).execute(jotting)
     }
 
     /**
@@ -50,6 +50,7 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
     private class AddNewJottingAsyncTask(
         private val jottingRepository: JottingRepository,
         private val mentionRepository: MentionRepository,
+        private val relationRepository: RelationRepository,
         private val mentions: List<Relation>?
     ) : AsyncTask<Jotting, Void, Long>() {
 
@@ -68,6 +69,7 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
                     // call specialized asynctask for every Mention added, each creating a new thread to add a single
                     // Mention
                     AddNewMentionAsyncTask(mentionRepository).execute(Mention(0, newJottingId, mention.relationId))
+                    UpdateRelationAsyncTask(relationRepository).execute(mention)
                 }
             }
         }
@@ -88,6 +90,25 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
         // insert the new Mention
         override fun doInBackground(vararg mentions: Mention): Void?{
             mentionRepository.insert(mentions[0])
+            return null
+        }
+    }
+
+    /**
+     * UpdateRelationAsyncTask is a subclass of AsyncTask that allows us to update a Relation that exists in the data-
+     * base. In this case, the attribute mentions (i.e. a count of the number of mentions connected to this Relation)
+     * is updated. This operation should be handled on a separate thread to avoid locking the UI.
+     *
+     * @param relationRepository The RelationRepository responsible for handling database interactions regarding
+     * Relation objects.
+     */
+    private class UpdateRelationAsyncTask(
+        private val relationRepository: RelationRepository
+    ) : AsyncTask<Relation, Void, Void>() {
+
+        // insert the new Mention
+        override fun doInBackground(vararg relations: Relation): Void?{
+            relationRepository.update(relations[0])
             return null
         }
     }

@@ -1,8 +1,14 @@
 <resources>
     <!-- APPLICATION -->
     <string name="app_name">Jocelyn</string>
-    <string name="monikerFormatError">Moniker can only consist of (lowercase) letters, numbers, or any of -_+*/!?@#$%&amp;. No spaces are allowed.</string>
+    <string name="monikerFormatError">Moniker can only consist of (lowercase) letters, numbers, or any of -_+*/!?@#$%&amp;.
+        No spaces are allowed.
+    </string>
     <string name="relSuggHelp">Name or moniker starts with</string>
+    <string name="action_view_profile">View profile.</string>
+    <string name="action_edit_information">Edit information.</string>
+    <string name="backdrop_title">RELATIONS</string>
+    <string name="backdrop_subtitle">Show me your friends, and I\'ll show you your future.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

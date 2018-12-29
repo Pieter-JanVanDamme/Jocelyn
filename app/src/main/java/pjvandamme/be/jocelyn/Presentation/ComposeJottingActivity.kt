@@ -123,20 +123,34 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
             var mentionedRelations: MutableList<Relation>? = mutableListOf()
             val monikersUsed: List<String> = getMentionsText(editTextField.text, mentionChar)
 
+            var dbUpdateCompleted: Boolean = false
+
             // create observer
             var relationsObserver = Observer<List<Relation>> { relationsList ->
-                // get a list of all relations, to filter in the next step
-                this.allRelations = relationsList
 
-                // filter relations according to mentions in the jotting
-                var relationsInJotting: List<Relation>? = null
-                if(allRelations != null){
-                    // this lambda checks, for every Relation available, if its currentMoniker matches ANY in the list of
-                    // monikers from the Jotting
-                    relationsInJotting = allRelations?.filter{ p -> monikersUsed.any{ it == p.currentMoniker }}
-                    composeJottingViewModel?.addNewJotting(
-                        Jotting(0, Calendar.getInstance().time,editTextField.text.toString()),
-                        relationsInJotting)
+                if(!dbUpdateCompleted) {
+
+                    // get a list of all relations, to filter in the next step
+                    this.allRelations = relationsList
+
+                    // filter relations according to mentions in the jotting
+                    var relationsInJotting: List<Relation>? = null
+                    if (allRelations != null) {
+                        // this lambda checks, for every Relation available, if its currentMoniker matches ANY in the list of
+                        // monikers from the Jotting
+                        relationsInJotting = allRelations?.filter { p -> monikersUsed.any { it == p.currentMoniker } }
+                        relationsInJotting?.forEach {
+                            it.mentions++
+                        }
+                        composeJottingViewModel?.addNewJotting(
+                            Jotting(0, Calendar.getInstance().time, editTextField.text.toString()),
+                            relationsInJotting
+                        )
+                    }
+
+                    // prevent triggering the above block of code for every observation of changes in
+                    // ComposeJottingViewModel's LiveData<List<Relation>> before the activity can be finished
+                    dbUpdateCompleted = true
                 }
             }
 

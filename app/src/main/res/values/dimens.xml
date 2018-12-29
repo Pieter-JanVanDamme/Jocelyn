@@ -9,4 +9,19 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="accent_stroke">1dp</dimen>
     <dimen name="accent_padding">5dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_relation_radius">0dp</dimen>
+    <dimen name="picture_height">160dp</dimen>
+    <dimen name="relation_name_padding">10dp</dimen>
+    <dimen name="relation_name">15dp</dimen>
+    <dimen name="mentions_count_padding_bottom">5dp</dimen>
+    <dimen name="mentions_count">12dp</dimen>
+    <dimen name="pic_relation_overflow_width">20dp</dimen>
+    <dimen name="pic_relation_overflow_height">30dp</dimen>
+    <dimen name="pic_relation_overflow_margin_top">10dp</dimen>
+    <dimen name="menu_relation_layout_height">30dp</dimen>
+    <dimen name="menu_relation_layout_width">200dp</dimen>
+    <dimen name="detail_backdrop_height">250dp</dimen>
+    <dimen name="backdrop_title">30dp</dimen>
+    <dimen name="backdrop_subtitle">18dp</dimen>
 </resources>
