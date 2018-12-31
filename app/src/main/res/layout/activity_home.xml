@@ -34,7 +34,7 @@
         <Button
                 android:text="Relations"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/relationsActivity"
+                android:layout_height="wrap_content" android:id="@+id/relationsBtn"
                 android:textColor="@color/colorPrimaryDark"/>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton

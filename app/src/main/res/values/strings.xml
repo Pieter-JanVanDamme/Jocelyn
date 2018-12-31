@@ -5,12 +5,11 @@
         No spaces are allowed.
     </string>
     <string name="relSuggHelp">Name or moniker starts with</string>
-    <string name="action_view_profile">View profile.</string>
-    <string name="action_edit_information">Edit information.</string>
+
+    <!-- RELATIONS OVERVIEW -->
+    <string name="toolbar_relations_overview">Relations</string>
     <string name="backdrop_title">RELATIONS</string>
-    <string name="backdrop_subtitle">Show me your friends, and I\'ll show you your future.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="backdrop_subtitle">Show me your friends...\n...and I\'ll show you your future.</string>
+    <string name="action_view_profile">View profile</string>
+    <string name="action_edit_information">Edit information</string>
 </resources>

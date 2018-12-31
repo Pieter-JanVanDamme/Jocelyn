@@ -59,7 +59,6 @@ class MyRelationSuggestionRecyclerViewAdapter(
         val relName: TextView = view.suggestionName
     }
 
-    /*****************************************************************************************************************/
     fun updateRelationSuggestions(newSuggestions: List<Relation>?){
         if(newSuggestions != null) {
             this.relationSuggestions = newSuggestions

@@ -1,7 +1,6 @@
 package pjvandamme.be.jocelyn.Presentation
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Rect
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,12 +12,14 @@ import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import pjvandamme.be.jocelyn.Domain.Models.Relation
-import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
-import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationsOverviewViewModel
+import pjvandamme.be.jocelyn.R.id.toolbar
+
+
 
 
 class RelationsOverviewActivity : AppCompatActivity() {
@@ -34,12 +35,16 @@ class RelationsOverviewActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        // enabling a back button; navigationOnClickListener must be set explicitly for this collapsing toolbar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
         initCollapsingToolbar()
 
         recyclerView = findViewById(R.id.recycler_view)
 
         relationList = mutableListOf()
-        adapter = RelationsOverviewRecyclerAdapter(this, relationList!!)
+        adapter = RelationsOverviewRecyclerAdapter(this)
 
         val mLayoutManager = GridLayoutManager(this, 2)
         recyclerView!!.layoutManager = mLayoutManager
@@ -50,11 +55,12 @@ class RelationsOverviewActivity : AppCompatActivity() {
         // initialize viewmodel
         relationsOverviewViewModel = RelationsOverviewViewModel(this.application)
 
+        // set observer to LiveData change
         relationsOverviewViewModel?.allRelations?.observe(this, object: Observer<List<Relation>> {
             override fun onChanged(t: List<Relation>?){
                 relationList = t
                 // add all relations to the relationsList
-                adapter!!.notifyDataSetChanged()
+                adapter!!.updateRelationSuggestions(t)
             }
         })
 
@@ -120,9 +126,7 @@ class RelationsOverviewActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Converting dp to pixel
-     */
+    // conversion of dp to regular pixels
     private fun dpToPx(dp: Int): Int {
         val r = resources
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics))

@@ -14,6 +14,7 @@ import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
 import android.view.View
+import android.widget.Button
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
@@ -54,6 +55,16 @@ class HomeActivity : AppCompatActivity() {
             startActivity(composeJottingIntent)
         }
 
+
+        /***************** TESTING PURPOSES ***************************************************************************/
+        /**************************************************************************************************************/
+        val relationbtn: Button = findViewById(relationsBtn)
+        relationbtn.setOnClickListener{
+            val relationsOverviewIntent = Intent(this, RelationsOverviewActivity::class.java)
+            startActivity(relationsOverviewIntent)
+        }
+        /**************************************************************************************************************/
+        /**************************************************************************************************************/
     }
 
     override fun onStart(){

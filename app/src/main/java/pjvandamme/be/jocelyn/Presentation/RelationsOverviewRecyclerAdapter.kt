@@ -3,17 +3,21 @@ package pjvandamme.be.jocelyn.Presentation
 import android.widget.Toast
 //import sun.security.krb5.internal.KDCOptions.with
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.PopupMenu
 import android.widget.TextView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.R
 
 
-class RelationsOverviewRecyclerAdapter(private val mContext: Context, private val relationList: List<Relation>) :
+class RelationsOverviewRecyclerAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RelationsOverviewRecyclerAdapter.ViewHolder>() {
+
+    private var relationsList: List<Relation> = listOf()
 
     // create and configure the ViewHolder for a particular card
     // has a Viewgroup that will hold the views managed by the holder...
@@ -21,15 +25,14 @@ class RelationsOverviewRecyclerAdapter(private val mContext: Context, private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.relation_card, parent, false)
-
         return ViewHolder(itemView)
     }
 
     // updates the ViewHolder based on model data for a certain position
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val relation = relationList[position]
-        holder.title.text = relation.fullName
+        val relation = relationsList!![position]
         holder.count.text = relation.mentions.toString() + " mentions"
+        holder.title.text = relation.fullName
         holder.thumbnail.setImageResource(R.drawable._default)
 
         holder.overflow.setOnClickListener(object : View.OnClickListener {
@@ -49,17 +52,26 @@ class RelationsOverviewRecyclerAdapter(private val mContext: Context, private va
         popup.show()
     }
 
+    // setting the list of relations and notifying the change in data set, so that the view can be recreated
+    // if we don't do this, getItemCount() will always return 0 and the view will not be created
+    fun updateRelationSuggestions(newRelations: List<Relation>?){
+        if(newRelations != null) {
+            this.relationsList = newRelations
+            notifyDataSetChanged()
+        }
+    }
+
     // click listener for popup menu
     internal inner class MyMenuItemClickListener : PopupMenu.OnMenuItemClickListener {
 
         override fun onMenuItemClick(menuItem: MenuItem): Boolean {
             when (menuItem.getItemId()) {
                 R.id.action_view_profile -> {
-                    Toast.makeText(mContext, "Add to favourite", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "Opening Profile", Toast.LENGTH_SHORT).show()
                     return true
                 }
                 R.id.action_edit_information -> {
-                    Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "Opening Editor", Toast.LENGTH_SHORT).show()
                     return true
                 }
             }
@@ -84,6 +96,6 @@ class RelationsOverviewRecyclerAdapter(private val mContext: Context, private va
     }
 
     override fun getItemCount(): Int {
-        return relationList.size
+        return relationsList.size
     }
 }
