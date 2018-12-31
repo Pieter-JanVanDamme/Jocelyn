@@ -3,6 +3,7 @@ package pjvandamme.be.jocelyn.Presentation
 import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -43,6 +44,8 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
         supportActionBar?.title = "Compose Jotting"
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // initialize ComposeJottingViewModel
         composeJottingViewModel = ComposeJottingViewModel(this.application)

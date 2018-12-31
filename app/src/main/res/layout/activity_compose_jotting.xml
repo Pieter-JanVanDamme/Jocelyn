@@ -48,7 +48,21 @@
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="@+id/editJottingContent" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.95"
-            app:layout_constraintVertical_bias="0.95" app:backgroundTint="@color/colorComplementary"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.98"
+            app:layout_constraintVertical_bias="0.86" app:backgroundTint="@color/colorComplementary"
+            android:layout_marginBottom="8dp"/>
+
+    <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@color/colorPrimaryVeryLight"
+            app:itemTextColor="@color/colorPrimaryVeryLight"
+            app:menu="@menu/bottom_nav_main"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

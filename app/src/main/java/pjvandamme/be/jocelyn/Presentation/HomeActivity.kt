@@ -6,6 +6,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -26,28 +27,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
         val logoView: ImageView = findViewById(R.id.logoView)
         logoView.bringToFront()
-
-        /* TESTING THE INSERTION **************************************************************************************/
-        val relationSuggestionViewModel = ViewModelProviders
-            .of(this, RelationSuggestionViewModelFactory(this.application, ""))
-            .get(RelationSuggestionViewModel::class.java)
-
-        var relationsObserver = Observer<List<Relation>> { relationList ->
-            val test: TextView = findViewById(testView)
-            var all: String = ""
-            if(relationList != null) {
-                for (rel in relationList) {
-                    all += rel.getSuggestionName() + " mentions: " + rel.mentions
-                }
-            }
-            test.text = all
-        }
-
-        relationSuggestionViewModel?.suggestedRelations?.observe(this, relationsObserver)
-
-        /* ************************************************************************************************************/
 
         val actionbtn: FloatingActionButton = findViewById(addJottingBtn)
         actionbtn.setOnClickListener{

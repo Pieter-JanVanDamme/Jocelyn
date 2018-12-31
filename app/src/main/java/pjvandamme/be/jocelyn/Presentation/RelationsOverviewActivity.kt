@@ -8,6 +8,7 @@ import pjvandamme.be.jocelyn.R
 import android.util.TypedValue
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
@@ -34,6 +35,8 @@ class RelationsOverviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_relations_overview)
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
+
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // enabling a back button; navigationOnClickListener must be set explicitly for this collapsing toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

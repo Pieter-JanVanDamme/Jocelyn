@@ -7,8 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorComplementary</item>
         <item name="android:editTextColor">#fefefe</item>
-        <item name="android:textColorPrimary">@color/colorText</item>
-        <item name="android:textColorSecondary">#fefefe</item>
+        <!-- note: android support design seems to crash if android:textColorPrimary and android:textColorSecondary are found -->
+        <!-- <item name="android:textColorPrimary">@color/colorText</item> -->
+        <!-- <item name="android:textColorSecondary">#fefefe</item> -->
         <item name="android:textColorTertiary">#fefefe</item>
         <item name="android:textColorPrimaryInverse">#fefefe</item>
         <item name="android:textColorSecondaryInverse">#fefefe</item>

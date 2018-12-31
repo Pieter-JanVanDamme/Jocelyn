@@ -12,4 +12,9 @@
     <string name="backdrop_subtitle">Show me your friends...\n...and I\'ll show you your future.</string>
     <string name="action_view_profile">View profile</string>
     <string name="action_edit_information">Edit information</string>
+
+    <!-- BOTTOM NAV BAR -->
+    <string name="relations_overview">Relations</string>
+    <string name="compose_jotting">New Jotting</string>
+    <string name="create_relation">New Relation</string>
 </resources>
