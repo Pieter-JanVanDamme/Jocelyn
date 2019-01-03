@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- android:layout_marginBottom="?attr/actionBarSize" avoids the nav bar overlapping the list-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="?attr/actionBarSize"
                 android:background="@color/colorLightBackground"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context="pjvandamme.be.jocelyn.Presentation.RelationsOverviewActivity"

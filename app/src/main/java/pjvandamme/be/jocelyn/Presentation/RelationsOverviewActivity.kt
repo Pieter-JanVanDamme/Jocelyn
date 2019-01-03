@@ -89,7 +89,7 @@ class RelationsOverviewActivity : AppCompatActivity() {
                     scrollRange = appBarLayout.totalScrollRange
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.title = getString(R.string.app_name)
+                    collapsingToolbar.title = getString(R.string.toolbar_relations_overview)
                     isShow = true
                 } else if (isShow) {
                     collapsingToolbar.title = " "
