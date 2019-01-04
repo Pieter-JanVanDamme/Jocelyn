@@ -30,40 +30,14 @@ class RelationRepository(application: Application){
     }
 
     @WorkerThread
-    fun getByCurrentMoniker(moniker: String): LiveData<Relation>{
-        return relationDao.getRelationByMoniker(moniker)
+    fun getByRelationId(id: Long): LiveData<Relation>{
+        return relationDao.getByRelationId(id)
     }
 
-    @WorkerThread
-    fun getRelationsFullNameLike(search: String): LiveData<List<Relation>> {
-        // only local database implemented at the moment; TODO: implement fetching data from network
-        return relationDao.getRelationsFullNameLike(search.toLowerCase())
-    }
-
-    @WorkerThread
-    fun getRelationsCurrentMonikerLike(search: String): LiveData<List<Relation>> {
-        // only local database implemented at the moment; TODO: implement fetching data from network
-        return relationDao.getRelationsCurrentMonikerLike(search.toLowerCase())
-    }
 
     @WorkerThread
     fun getRelationsFullNameOrCurrentMonikerLike(search: String): LiveData<List<Relation>> {
         return relationDao.getRelationsFullNameOrCurrentMonikerLike(search)
-    }
-
-    @WorkerThread
-    fun getAllMonikers(): LiveData<List<String>> {
-        // only local database implemented at the moment; TODO: implement fetching data from network
-        return relationDao.getAllMonikers()
-    }
-
-    fun assignNewMoniker(relation: Relation, newMoniker: String): String {
-        val moniker = newMoniker.toLowerCase()
-        // check if moniker is already in use, if not throw error
-        validateMoniker(newMoniker)
-        val oldMoniker = relation.currentMoniker
-        // change the moniker
-        return oldMoniker
     }
 
     // todo: testen

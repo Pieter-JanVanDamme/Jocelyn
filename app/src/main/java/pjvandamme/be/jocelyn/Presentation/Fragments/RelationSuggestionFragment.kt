@@ -1,4 +1,4 @@
-package pjvandamme.be.jocelyn.Presentation
+package pjvandamme.be.jocelyn.Presentation.Fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,14 +8,13 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import pjvandamme.be.jocelyn.Domain.Models.Relation
-import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
+import pjvandamme.be.jocelyn.Presentation.Adapters.MyRelationSuggestionRecyclerViewAdapter
 import pjvandamme.be.jocelyn.R
 
 

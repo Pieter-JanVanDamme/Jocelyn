@@ -1,7 +1,6 @@
-package pjvandamme.be.jocelyn.Presentation
+package pjvandamme.be.jocelyn.Presentation.Adapters
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_relationsuggestion.view.*
 import pjvandamme.be.jocelyn.R
-import pjvandamme.be.jocelyn.Presentation.RelationSuggestionFragment.OnListFragmentInteractionListener
+import pjvandamme.be.jocelyn.Presentation.Fragments.RelationSuggestionFragment.OnListFragmentInteractionListener
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 
 /**

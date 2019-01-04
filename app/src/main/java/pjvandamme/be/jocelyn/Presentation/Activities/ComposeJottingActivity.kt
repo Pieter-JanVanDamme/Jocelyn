@@ -1,4 +1,4 @@
-package pjvandamme.be.jocelyn.Presentation
+package pjvandamme.be.jocelyn.Presentation.Activities
 
 import android.arch.lifecycle.Observer
 import android.support.v7.app.AppCompatActivity
@@ -17,6 +17,7 @@ import android.widget.EditText
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
+import pjvandamme.be.jocelyn.Presentation.Fragments.RelationSuggestionFragment
 import pjvandamme.be.jocelyn.R
 import java.util.*
 
@@ -29,7 +30,8 @@ import java.util.*
  * @property mentionChar The character that, if it appears word-initially, signals a Mention.
  * @property relationSuggestionFragment The fragment responsible for showing suggestions when the user is typing a Mention.
  */
-class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.OnListFragmentInteractionListener {
+class ComposeJottingActivity : AppCompatActivity(),
+    RelationSuggestionFragment.OnListFragmentInteractionListener {
 
     val mentionChar = '@'
     var relationSuggestionFragment = RelationSuggestionFragment()
@@ -94,7 +96,8 @@ class ComposeJottingActivity : AppCompatActivity(), RelationSuggestionFragment.O
                     // remove the previously added fragment, if any
                     fragTrans.remove(relationSuggestionFragment)
                     // create the new fragment and set the Bundle containing the searchString as its arguments
-                    relationSuggestionFragment = RelationSuggestionFragment()
+                    relationSuggestionFragment =
+                            RelationSuggestionFragment()
                     relationSuggestionFragment.arguments = fragmentArguments
                     // add the fragment to the given view
                     fragTrans.add(R.id.relationSuggestContainer, relationSuggestionFragment)

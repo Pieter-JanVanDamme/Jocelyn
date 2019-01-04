@@ -8,7 +8,7 @@
                 android:layout_marginBottom="?attr/actionBarSize"
                 android:background="@color/colorLightBackground"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context="pjvandamme.be.jocelyn.Presentation.RelationsOverviewActivity"
+                tools:context="pjvandamme.be.jocelyn.Presentation.Activities.RelationsOverviewActivity"
                 tools:showIn="@layout/activity_relations_overview">
 
     <android.support.v7.widget.RecyclerView
@@ -16,6 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical">
+    </android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/editRelationContainer">
+    </FrameLayout>
 
 </RelativeLayout>

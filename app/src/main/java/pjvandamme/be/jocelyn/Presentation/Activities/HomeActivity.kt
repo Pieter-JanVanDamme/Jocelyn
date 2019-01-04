@@ -1,7 +1,5 @@
-package pjvandamme.be.jocelyn.Presentation
+package pjvandamme.be.jocelyn.Presentation.Activities
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,16 +7,10 @@ import android.os.Handler
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.FloatingActionButton
 import android.widget.ImageView
-import android.widget.TextView
-import pjvandamme.be.jocelyn.Domain.Models.Jotting
-import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
 import android.view.View
 import android.widget.Button
-import pjvandamme.be.jocelyn.Domain.Models.Relation
-import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
-import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
 
 
 class HomeActivity : AppCompatActivity() {

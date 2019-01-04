@@ -21,17 +21,8 @@ interface RelationDao {
     @Query("SELECT currentMoniker FROM relation ORDER BY currentMoniker ASC")
     fun getAllMonikers(): LiveData<List<String>>
 
-    @Query("SELECT * FROM relation WHERE currentMoniker = :moniker")
-    fun getRelationByMoniker(moniker: String): LiveData<Relation>
-
-    @Query("SELECT * FROM relation WHERE fullName = :name")
-    fun getRelationByFullName(name: String): LiveData<Relation>
-
-    @Query("SELECT * FROM relation WHERE fullName LIKE :search")
-    fun getRelationsFullNameLike(search: String): LiveData<List<Relation>>
-
-    @Query("SELECT * FROM relation WHERE currentMoniker LIKE :search")
-    fun getRelationsCurrentMonikerLike(search: String): LiveData<List<Relation>>
+    @Query("SELECT * FROM relation WHERE relationId = :id")
+    fun getByRelationId(id: Long): LiveData<Relation>
 
     @Query("SELECT * FROM relation WHERE (fullName LIKE :search) OR (currentMoniker LIKE :search) LIMIT 10")
     fun getRelationsFullNameOrCurrentMonikerLike(search: String): LiveData<List<Relation>>

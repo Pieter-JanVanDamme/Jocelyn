@@ -12,6 +12,14 @@
     <string name="backdrop_subtitle">Show me your friends...\n...and I\'ll show you your future.</string>
     <string name="action_view_profile">View profile</string>
     <string name="action_edit_information">Edit information</string>
+    <string name="toast_view_profile">Opening profile</string>
+    <string name="toast_edit_information">Opening editor</string>
+    <string name="menu_error">An error occurred, could not complete action.</string>
+
+    <!-- CREATE UPDATE RELATION -->
+    <string name="update_relation_fragment_title">Edit Relation Info</string>
+    <string name="create_relation_fragment_title">Create New Relation</string>
+    <string name="confirm_button">Confirm</string>
 
     <!-- BOTTOM NAV BAR -->
     <string name="relations_overview">Relations</string>

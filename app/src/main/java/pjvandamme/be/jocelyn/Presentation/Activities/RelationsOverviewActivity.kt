@@ -1,4 +1,4 @@
-package pjvandamme.be.jocelyn.Presentation
+package pjvandamme.be.jocelyn.Presentation.Activities
 
 import android.arch.lifecycle.Observer
 import android.graphics.Rect
@@ -10,17 +10,17 @@ import android.support.v7.widget.RecyclerView
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationsOverviewViewModel
-import pjvandamme.be.jocelyn.R.id.toolbar
-
-
+import pjvandamme.be.jocelyn.Presentation.Adapters.RelationsOverviewRecyclerAdapter
+import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragment
 
 
 class RelationsOverviewActivity : AppCompatActivity() {
@@ -41,7 +41,6 @@ class RelationsOverviewActivity : AppCompatActivity() {
         // enabling a back button; navigationOnClickListener must be set explicitly for this collapsing toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressed() }
-
         initCollapsingToolbar()
 
         recyclerView = findViewById(R.id.recycler_view)
@@ -70,6 +69,12 @@ class RelationsOverviewActivity : AppCompatActivity() {
         val backdrop: ImageView = findViewById(R.id.backdrop)
         backdrop.setImageResource(R.drawable.elephant_cover)
 
+        // initialize fragmentmanager
+        val fragMan: FragmentManager = this.supportFragmentManager
+        // remove a CreateEditRelationFragment if it already exists to prevent multiple instances
+        val frag = fragMan.findFragmentById(R.id.editRelationContainer)
+        if(frag != null)
+            fragMan.beginTransaction().remove(frag).commit()
     }
 
     // init collapsable toolbar, shows and hides toolbar title when scrolling

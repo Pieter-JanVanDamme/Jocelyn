@@ -24,4 +24,7 @@
     <dimen name="detail_backdrop_height">250dp</dimen>
     <dimen name="backdrop_title">30dp</dimen>
     <dimen name="backdrop_subtitle">18dp</dimen>
+    <dimen name="create_edit_relation_layout_margin">6dp</dimen>
+    <dimen name="create_edit_relation_element_margin">4dp</dimen>
+    <dimen name="create_edit_relation_edit_text_width">275dp</dimen>
 </resources>
