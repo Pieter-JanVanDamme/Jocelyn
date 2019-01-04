@@ -23,6 +23,8 @@ import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragmentMo
 class RelationsOverviewRecyclerAdapter(private val mContext: Context) :
     RecyclerView.Adapter<RelationsOverviewRecyclerAdapter.ViewHolder>() {
 
+    var fragMan: FragmentManager = (mContext as FragmentActivity).supportFragmentManager
+
     private var relationsList: List<Relation> = listOf()
 
     // create and configure the ViewHolder for a particular card
@@ -70,8 +72,6 @@ class RelationsOverviewRecyclerAdapter(private val mContext: Context) :
     // click listener for popup menu
     internal inner class MyMenuItemClickListener(private val mContext: Context, private val relation: Relation)
             : PopupMenu.OnMenuItemClickListener {
-
-        var fragMan: FragmentManager? = null
 
         init {
             try {

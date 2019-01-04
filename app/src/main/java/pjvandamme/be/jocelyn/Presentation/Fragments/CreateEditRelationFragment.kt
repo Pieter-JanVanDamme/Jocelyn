@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.CreateEditRelationViewModel
@@ -55,6 +56,11 @@ class CreateEditRelationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val discard: ImageView = view!!.findViewById(R.id.discardImage)
+        discard.setOnClickListener{
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+        }
 
         /* INITIALIZE VIEW ATTRIBUTES*/
         val titleText: TextView = view!!.findViewById(R.id.createUpdateFragmentTitle)

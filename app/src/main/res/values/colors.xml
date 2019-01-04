@@ -5,10 +5,10 @@
     <color name="colorBackground">#33333d</color>
     <color name="colorBackgroundLighter">#64646f</color>
     <color name="colorText">#34343e</color>
-    <color name="colorPrimary">#C02148</color>
+    <color name="colorPrimary">#c02148</color>
     <color name="colorPrimaryDark">#891040</color>
     <color name="colorPrimaryLight">#F1637F</color>
-    <color name="colorPrimaryVeryLight">#FDE4E9</color>
+    <color name="colorPrimaryVeryLight">#fde4e9</color>
     <color name="colorComplementary">#21c098</color>
     <color name="colorComplementaryLight">#ddf4ee</color>
     <color name="colorAnalogousSupport">#c04921</color>

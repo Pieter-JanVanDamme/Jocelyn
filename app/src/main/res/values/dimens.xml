@@ -27,4 +27,5 @@
     <dimen name="create_edit_relation_layout_margin">6dp</dimen>
     <dimen name="create_edit_relation_element_margin">4dp</dimen>
     <dimen name="create_edit_relation_edit_text_width">275dp</dimen>
+    <dimen name="create_edit_relation_title_right_margin">15dp</dimen>
 </resources>
