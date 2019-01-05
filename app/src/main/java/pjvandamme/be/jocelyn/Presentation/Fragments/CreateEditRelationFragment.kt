@@ -122,11 +122,10 @@ class CreateEditRelationFragment : Fragment() {
                             validateNutshell(nutshellText.editableText.toString())
                             // if none of the trivial validations fail, we will validate that the chosen moniker is
                             // unique and, if it is, update the Relation in the database
-                            validateMonikerUniqueSubmit(monikerText.toString())
+                            validateMonikerUniqueSubmit(monikerText.editableText.toString())
                         } catch (e: InputMismatchException) {
                             /* do nothing, error text was already set in onTextChanged listener(s) */
-
-                    }
+                        }
                 }
             }
             titleText.setText(R.string.update_relation_fragment_title)
@@ -246,12 +245,14 @@ class CreateEditRelationFragment : Fragment() {
         val relWithMon = viewModel.relationWithMoniker
         relWithMon.observe(this, object: Observer<Relation>{
             override fun onChanged(t: Relation?) {
+                Log.i("@pj", "RelationWithMoniker = " + t?.getSuggestionName())
                 // if relationId's match, we're talking about the same Relation - so the user has therefore input that
                 // Relation's moniker as its currently now in the database
-                if (t == null) {
+                if (t == null || t.relationId == currentRelationId) {
                     // this is the problem with LiveData... I need to set observables on it, and if there's a conditional
                     // action that itself depends on other LiveData I need to implement separate functions to implement
                     // the necessary observers
+                    Log.i("@pj", "About to call updateRelationInDatabase()")
                     updateRelationInDatabase()
                 }
                 relWithMon.removeObserver(this)
@@ -260,8 +261,13 @@ class CreateEditRelationFragment : Fragment() {
     }
 
     fun updateRelationInDatabase(){
+        // get the Relation object we're editing, set its attributes, and update the database
         viewModel.relationInFragment?.observe(this, Observer<Relation>{rel ->
             if(rel != null) {
+                rel.fullName = nameText.editableText.toString()
+                rel.currentMoniker = monikerText.editableText.toString()
+                rel.nutshell = nutshellText.editableText.toString()
+                Log.i("@pj","About to save changes to relation, with rel: " + rel.getSuggestionName())
                 viewModel.saveChangesToRelation(rel)
             }
         })

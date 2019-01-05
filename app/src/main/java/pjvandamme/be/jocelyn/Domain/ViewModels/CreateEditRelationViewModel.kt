@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
+import android.util.Log
 import pjvandamme.be.jocelyn.Data.Persistence.RelationDao
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
@@ -26,6 +27,7 @@ class CreateEditRelationViewModel(application: Application, initRelation: Relati
     }
 
     fun setRelationWithMoniker(moniker: String){
+        Log.i("@pj", "Setting relation with Moniker to " + moniker)
         relationWithMoniker = relationRepository.getByCurrentMoniker(moniker)
     }
     
@@ -39,6 +41,7 @@ class CreateEditRelationViewModel(application: Application, initRelation: Relati
 
         // insert the new Mention
         override fun doInBackground(vararg relations: Relation): Void?{
+            Log.i("@pj", "About to update using asynctask")
             relationRepository.update(relations[0])
             return null
         }
