@@ -34,19 +34,14 @@ class RelationRepository(application: Application){
         return relationDao.getByRelationId(id)
     }
 
+    @WorkerThread
+    fun getByCurrentMoniker(search: String): LiveData<Relation>{
+        return relationDao.getByCurrentMoniker(search)
+    }
 
     @WorkerThread
     fun getRelationsFullNameOrCurrentMonikerLike(search: String): LiveData<List<Relation>> {
         return relationDao.getRelationsFullNameOrCurrentMonikerLike(search)
-    }
-
-    // todo: testen
-    fun validateMoniker(candidate: String) {
-        val regex = Regex("[-_+*/!?@#$%&a-zA-Z0-9]+")
-        if(regex.matches(candidate))
-            return
-        throw InputMismatchException("Moniker can only consist of (lowercase) letters, numbers, or any of " +
-                "-_+*/!?@#$%&. No spaces are allowed.")
     }
 
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: RelationDao):

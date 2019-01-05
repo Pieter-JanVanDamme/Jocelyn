@@ -52,6 +52,12 @@
                     android:layout_marginBottom="@dimen/create_edit_relation_element_margin"
                     android:minWidth="@dimen/create_edit_relation_edit_text_width"/>
             <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/nameError"
+                    android:textColor="@color/colorPrimaryDark" android:text="Error"
+                    android:layout_marginBottom="@dimen/create_edit_relation_element_margin"
+                    android:background="@color/colorPrimaryLight"/>
+            <TextView
                     android:text="Moniker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/monikerLabel"
@@ -68,6 +74,12 @@
                     android:hint="This Relation's unique Moniker."
                     android:minWidth="@dimen/create_edit_relation_edit_text_width"/>
             <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/monikerError"
+                    android:textColor="@color/colorPrimaryDark" android:text="Error"
+                    android:layout_marginBottom="@dimen/create_edit_relation_element_margin"
+                    android:background="@color/colorPrimaryLight" android:layout_height="wrap_content"/>
+            <TextView
                     android:text="Description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/nutshellLabel"
@@ -82,6 +94,12 @@
                     android:layout_marginBottom="@dimen/create_edit_relation_element_margin"
                     android:text="Description" android:hint="A succinct description of this Relation."
                     android:minWidth="@dimen/create_edit_relation_edit_text_width"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/nutshellError"
+                    android:textColor="@color/colorPrimaryDark" android:text="Error"
+                    android:layout_marginBottom="@dimen/create_edit_relation_element_margin"
+                    android:background="@color/colorPrimaryLight"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
