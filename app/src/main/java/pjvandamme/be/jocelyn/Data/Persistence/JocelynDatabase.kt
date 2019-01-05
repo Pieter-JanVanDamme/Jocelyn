@@ -75,13 +75,13 @@ abstract class JocelynDatabase: RoomDatabase() {
             jDao.deleteAll()
 
             var relations: List<Relation> = listOf(
-                Relation(0, "An Haes", "Anneke", "Studied economics, loves to go skiing.", 25),
-                Relation(0, "Anne Vleeschouwer", "AlsIkJouZie", "Best ballroom dancer I know.",26),
-                Relation(0,"Annelies Schoup", "AnneliesSchoup", "", 2),
-                Relation(0,"Antoon ?", "AntoonBontenOs", "", 7),
-                Relation(0,"Frederik De Backer", "Fredje", "Awesome dude, been friends since primary school.",37),
-                Relation(0,"Anton Van Haever", "AusTirol", "Terrific web developer I've worked with for 9 years.", 51),
-                Relation(0,"Annabel Vertonghen", "AnnabelVrouwTheo", "Conniving.",4)
+                Relation(0, "An Haes", "anneke", "Studied economics, loves to go skiing.", 25),
+                Relation(0, "Anne Vleeschouwer", "alsikjouzie", "Best ballroom dancer I know.",26),
+                Relation(0,"Annelies Schoup", "anneliesschoup", "", 2),
+                Relation(0,"Antoon ?", "antoonbontenos", "", 7),
+                Relation(0,"Frederik De Backer", "fredje", "Awesome dude, been friends since primary school.",37),
+                Relation(0,"Anton Van Haever", "austirol", "Terrific web developer I've worked with for 9 years.", 51),
+                Relation(0,"Annabel Vertonghen", "annabelvrouwtheo", "Conniving.",4)
             )
             for(rel in relations) {
                 rDao.insert(rel)

@@ -14,6 +14,7 @@
     <string name="action_edit_information">Edit information</string>
     <string name="toast_view_profile">Opening profile</string>
     <string name="toast_edit_information">Opening editor</string>
+    <string name="toast_new_relation">Creating new Relation</string>
     <string name="menu_error">An error occurred, could not complete action.</string>
 
     <!-- CREATE UPDATE RELATION -->

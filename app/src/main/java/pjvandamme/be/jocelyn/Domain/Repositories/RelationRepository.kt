@@ -25,6 +25,11 @@ class RelationRepository(application: Application){
     }
 
     @WorkerThread
+    fun insert(relation: Relation){
+        relationDao.insert(relation)
+    }
+
+    @WorkerThread
     fun update(relation: Relation) {
         relationDao.update(relation)
     }

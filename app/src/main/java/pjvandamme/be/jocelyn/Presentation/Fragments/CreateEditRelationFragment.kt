@@ -2,17 +2,14 @@ package pjvandamme.be.jocelyn.Presentation.Fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import pjvandamme.be.jocelyn.Data.Persistence.RelationDao
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.CreateEditRelationViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.CreateEditRelationViewModelFactory
@@ -88,11 +85,6 @@ class CreateEditRelationFragment : Fragment() {
         monikerError = view!!.findViewById(R.id.monikerError)
         nutshellError = view!!.findViewById(R.id.nutshellError)
 
-        // make errorTexts invisible initially
-        for(viewText in listOf(nameError, monikerError, nutshellError)){
-            hideError(viewText)
-        }
-
         // Setup in case EDIT MODE
         if(fragmentMode == CreateEditRelationFragmentMode.UPDATE) {
             // get the relationId, use it to change the state of our ViewModel so we may fetch the correct data
@@ -113,20 +105,6 @@ class CreateEditRelationFragment : Fragment() {
                         }
                     }
                 })
-
-                val submitButton: Button = view!!.findViewById(R.id.submitButton)
-                submitButton.setOnClickListener{
-                        try {
-                            validateFullName(nameText.editableText.toString())
-                            validateMoniker(monikerText.editableText.toString())
-                            validateNutshell(nutshellText.editableText.toString())
-                            // if none of the trivial validations fail, we will validate that the chosen moniker is
-                            // unique and, if it is, update the Relation in the database
-                            validateMonikerUniqueSubmit(monikerText.editableText.toString())
-                        } catch (e: InputMismatchException) {
-                            /* do nothing, error text was already set in onTextChanged listener(s) */
-                        }
-                }
             }
             titleText.setText(R.string.update_relation_fragment_title)
         }
@@ -134,6 +112,9 @@ class CreateEditRelationFragment : Fragment() {
         // Setup in case CREATE MODE
         if(fragmentMode == CreateEditRelationFragmentMode.CREATE){
             titleText.setText(R.string.create_relation_fragment_title)
+            nameText.setText("")
+            monikerText.setText("")
+            nutshellText.setText("")
             // we don't need to receive relation attributes
             receivedRelationAttributes = true
         }
@@ -188,6 +169,26 @@ class CreateEditRelationFragment : Fragment() {
 
             override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) { /* ditto */ }
         })
+
+        // setup submit-button
+        val submitButton: Button = view!!.findViewById(R.id.submitButton)
+        submitButton.setOnClickListener{
+            try {
+                validateFullName(nameText.editableText.toString())
+                validateMoniker(monikerText.editableText.toString())
+                validateNutshell(nutshellText.editableText.toString())
+                // if none of the trivial validations fail, we will validate that the chosen moniker is
+                // unique and, if it is, update the Relation in the database
+                validateMonikerUniqueSubmit(monikerText.editableText.toString())
+            } catch (e: InputMismatchException) {
+                /* do nothing, error text was already set in onTextChanged listener(s) */
+            }
+        }
+
+        // make errorTexts invisible initially
+        for(viewText in listOf(nameError, monikerError, nutshellError)){
+            hideError(viewText)
+        }
     }
 
     fun hideError(errorTextView: TextView){
@@ -203,12 +204,20 @@ class CreateEditRelationFragment : Fragment() {
 
     // validation necessary in View; ViewModel is not
     fun validateFullName(candidate: String){
+        // test is not empty
+        if(candidate.isNullOrBlank())
+            throw InputMismatchException("Full name is a required field.")
+
         if(candidate.length > maxNameLength)
             throw InputMismatchException("Full name should be " + maxNameLength.toString() + " characters or less.")
     }
 
     fun validateMoniker(candidate: String) {
         var relationObserved = false
+
+        // test is not empty
+        if(candidate.isNullOrBlank())
+            throw InputMismatchException("Moniker is a required field.")
 
         // test length
         if(candidate.length > maxMonikerLength)
@@ -245,14 +254,12 @@ class CreateEditRelationFragment : Fragment() {
         val relWithMon = viewModel.relationWithMoniker
         relWithMon.observe(this, object: Observer<Relation>{
             override fun onChanged(t: Relation?) {
-                Log.i("@pj", "RelationWithMoniker = " + t?.getSuggestionName())
                 // if relationId's match, we're talking about the same Relation - so the user has therefore input that
                 // Relation's moniker as its currently now in the database
                 if (t == null || t.relationId == currentRelationId) {
                     // this is the problem with LiveData... I need to set observables on it, and if there's a conditional
                     // action that itself depends on other LiveData I need to implement separate functions to implement
                     // the necessary observers
-                    Log.i("@pj", "About to call updateRelationInDatabase()")
                     updateRelationInDatabase()
                 }
                 relWithMon.removeObserver(this)
@@ -261,16 +268,26 @@ class CreateEditRelationFragment : Fragment() {
     }
 
     fun updateRelationInDatabase(){
-        // get the Relation object we're editing, set its attributes, and update the database
-        viewModel.relationInFragment?.observe(this, Observer<Relation>{rel ->
-            if(rel != null) {
-                rel.fullName = nameText.editableText.toString()
-                rel.currentMoniker = monikerText.editableText.toString()
-                rel.nutshell = nutshellText.editableText.toString()
-                Log.i("@pj","About to save changes to relation, with rel: " + rel.getSuggestionName())
-                viewModel.saveChangesToRelation(rel)
-            }
-        })
+        if(fragmentMode == CreateEditRelationFragmentMode.CREATE) {
+            viewModel.insertRelation(Relation(
+                0,
+                nameText.editableText.toString(),
+                monikerText.editableText.toString().toLowerCase(),
+                nutshellText.editableText.toString(),
+                0
+            ))
+        }
+        else {
+            // get the Relation object we're editing, set its attributes, and update the database
+            viewModel.relationInFragment?.observe(this, Observer<Relation> { rel ->
+                if (rel != null) {
+                    rel.fullName = nameText.editableText.toString()
+                    rel.currentMoniker = monikerText.editableText.toString().toLowerCase()
+                    rel.nutshell = nutshellText.editableText.toString()
+                    viewModel.saveChangesToRelation(rel)
+                }
+            })
+        }
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
     }
 

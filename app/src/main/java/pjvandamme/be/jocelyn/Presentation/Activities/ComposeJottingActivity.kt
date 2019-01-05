@@ -47,8 +47,6 @@ class ComposeJottingActivity : AppCompatActivity(),
         // implement a 'Back button' in the title bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
         // initialize ComposeJottingViewModel
         composeJottingViewModel = ComposeJottingViewModel(this.application)
 
@@ -126,7 +124,7 @@ class ComposeJottingActivity : AppCompatActivity(),
 
         val actionbtn: FloatingActionButton = findViewById(R.id.submitJottingBtn)
         actionbtn.setOnClickListener{
-            var mentionedRelations: MutableList<Relation>? = mutableListOf()
+            //var mentionedRelations: MutableList<Relation>? = mutableListOf()
             val monikersUsed: List<String> = getMentionsText(editTextField.text, mentionChar)
 
             var dbUpdateCompleted: Boolean = false
@@ -144,8 +142,8 @@ class ComposeJottingActivity : AppCompatActivity(),
                     if (allRelations != null) {
                         // this lambda checks, for every Relation available, if its currentMoniker matches ANY in the list of
                         // monikers from the Jotting
-                        relationsInJotting = allRelations?.filter { p -> monikersUsed.any { it == p.currentMoniker } }
-                        relationsInJotting?.forEach {
+                        relationsInJotting = allRelations?.filter { p -> monikersUsed.any {it -> it == p.currentMoniker } }
+                        relationsInJotting?.forEach {it ->
                             it.mentions++
                         }
                         composeJottingViewModel?.addNewJotting(

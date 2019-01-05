@@ -10,17 +10,19 @@ import android.support.v7.widget.RecyclerView
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.CollapsingToolbarLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationsOverviewViewModel
 import pjvandamme.be.jocelyn.Presentation.Adapters.RelationsOverviewRecyclerAdapter
 import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragment
+import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragmentMode
 
 
 class RelationsOverviewActivity : AppCompatActivity() {
@@ -35,8 +37,6 @@ class RelationsOverviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_relations_overview)
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
-        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // enabling a back button; navigationOnClickListener must be set explicitly for this collapsing toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -75,6 +75,36 @@ class RelationsOverviewActivity : AppCompatActivity() {
         val frag = fragMan.findFragmentById(R.id.editRelationContainer)
         if(frag != null)
             fragMan.beginTransaction().remove(frag).commit()
+
+        val actionbtn: FloatingActionButton = findViewById(R.id.createRelationBtn)
+        actionbtn.setOnClickListener {
+            var editFragment = CreateEditRelationFragment()
+
+            if(fragMan != null){
+                // show the popup informing the user what's about to happen
+                Toast.makeText(this, R.string.toast_new_relation, Toast.LENGTH_SHORT).show()
+
+                // next, we'll add the fragment to RelationsOverviewActivity
+                var fragTrans = fragMan?.beginTransaction()
+
+                // remove the previously added fragment, if any
+                fragTrans?.remove(editFragment)
+
+                // create new fragment, set Bundle containing relation id and mode as arguments
+                // we set the CreateEditRelationFragmentMode as an argument as Fragments can't have non-default
+                // constructors
+                editFragment = CreateEditRelationFragment()
+                var fragArgs: Bundle = Bundle()
+                fragArgs.putString("mode", CreateEditRelationFragmentMode.CREATE.mode)
+                editFragment.arguments = fragArgs
+
+                // add fragment to RelationsOverviewActivity
+                fragTrans?.add(R.id.editRelationContainer, editFragment)
+                fragTrans?.commit()
+            } else {
+                Toast.makeText(this, R.string.menu_error, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // init collapsable toolbar, shows and hides toolbar title when scrolling

@@ -19,8 +19,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val bottomNav: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
         val logoView: ImageView = findViewById(R.id.logoView)
         logoView.bringToFront()
 

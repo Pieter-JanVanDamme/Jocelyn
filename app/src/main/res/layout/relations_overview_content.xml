@@ -5,7 +5,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="?attr/actionBarSize"
                 android:background="@color/colorLightBackground"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context="pjvandamme.be.jocelyn.Presentation.Activities.RelationsOverviewActivity"
@@ -21,7 +20,18 @@
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/editRelationContainer">
+            android:layout_height="match_parent" android:id="@+id/editRelationContainer"
+            android:layout_alignParentStart="true" android:layout_alignParentTop="true" android:layout_marginTop="0dp"
+            android:layout_marginStart="0dp">
     </FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true" app:srcCompat="@android:drawable/ic_menu_add"
+            android:id="@+id/createRelationBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="12dp"/>
 
 </RelativeLayout>
