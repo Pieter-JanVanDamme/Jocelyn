@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.Toast
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
@@ -150,6 +151,7 @@ class ComposeJottingActivity : AppCompatActivity(),
                             Jotting(0, Calendar.getInstance().time, editTextField.text.toString()),
                             relationsInJotting
                         )
+                        Toast.makeText(applicationContext, R.string.compose_jotting_save_toast, Toast.LENGTH_SHORT).show()
                     }
 
                     // prevent triggering the above block of code for every observation of changes in

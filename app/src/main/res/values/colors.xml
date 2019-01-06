@@ -14,6 +14,7 @@
     <color name="colorAnalogousSupport">#c04921</color>
     <color name="colorAnalogousAccent">#C02198</color>
     <color name="colorLightBackground">#f1f5f8</color>
+    <color name="colorJottingBackground">#fffacb</color>
     <!-- DEFAULT COLOURS
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>

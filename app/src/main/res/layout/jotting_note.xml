@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:layout_marginBottom="@dimen/jotting_note_margins"
+                                             android:layout_marginTop="@dimen/jotting_note_margins">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="@dimen/jotting_note_width"
+            android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="6dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="6dp" android:gravity="center_vertical"
+            android:background="@drawable/jotting_background">
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/jottingNoteDate"
+                android:layout_marginLeft="@dimen/jotting_note_textview_margin_left_right"
+                android:layout_marginRight="@dimen/jotting_note_textview_margin_left_right"
+                android:textColor="@color/colorText" android:textSize="8sp" android:textAlignment="center"
+                android:layout_marginTop="@dimen/jotting_note_textview_margin_top"
+                android:layout_marginBottom="@dimen/jotting_note_textview_margin_between" android:textStyle="bold"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/jottingNoteContent"
+                android:layout_marginLeft="@dimen/jotting_note_textview_margin_left_right"
+                android:layout_marginRight="@dimen/jotting_note_textview_margin_left_right"
+                android:textColor="@color/colorText"
+                android:layout_marginTop="@dimen/jotting_note_textview_margin_between"
+                android:layout_marginBottom="@dimen/jotting_note_textview_margin_between"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:id="@+id/jottingNoteMentions"
+                android:layout_marginTop="@dimen/jotting_note_textview_margin_between"
+                android:layout_marginBottom="@dimen/jotting_note_textview_margin_bottom"
+                android:layout_marginLeft="@dimen/jotting_note_textview_margin_left_right"
+                android:layout_marginStart="@dimen/jotting_note_textview_margin_left_right">
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

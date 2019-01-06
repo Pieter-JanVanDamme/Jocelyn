@@ -10,22 +10,24 @@
             android:layout_height="@dimen/relsugg_listcont_height"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:paddingBottom="@dimen/relsugg_listcont_margin" android:background="@color/colorBackgroundLighter">
+            android:paddingBottom="@dimen/relsugg_listcont_margin"
+            android:gravity="center_horizontal">
 
         <ImageView
                 android:layout_height="@dimen/relsugg_listcont_pictureheight"
                 android:id="@+id/suggestionPicture"
-                android:layout_width="@dimen/relsugg_listcont_pictureheight" app:srcCompat="@drawable/_default"/>
+                android:layout_width="@dimen/relsugg_listcont_pictureheight" app:srcCompat="@drawable/_default"
+                android:layout_gravity="center_horizontal"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="@dimen/relsugg_listcont_namewidth"
                 android:layout_height="@dimen/relsugg_listcont_height" android:id="@+id/suggestionName"
                 android:paddingRight="@dimen/relsugg_listcont_namemargin"
-                android:paddingLeft="@dimen/relsugg_listcont_namemargin"
-                android:background="@color/colorBackgroundLighter"/>
+                android:paddingLeft="@dimen/relsugg_listcont_namemargin" android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorText"/>
         <ImageButton
                 android:layout_height="@dimen/relsugg_listcont_height"
                 android:id="@+id/suggestionBtn" android:layout_width="wrap_content"
-                android:src="@android:drawable/ic_menu_view" android:background="@color/colorBackgroundLighter"/>
+                android:src="@android:drawable/ic_menu_view"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -2,10 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">
     <solid
-            android:color="@color/colorBackgroundLighter" />
+            android:color="@color/colorLightBackground" />
     <stroke
             android:width="@dimen/accent_stroke"
-            android:color="@color/colorComplementaryLight" />
+            android:color="@color/colorComplementary" />
     <corners
             android:radius="12dp"
             android:topLeftRadius="0dp"/>

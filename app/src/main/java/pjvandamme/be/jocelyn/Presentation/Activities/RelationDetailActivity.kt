@@ -6,17 +6,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_relation_detail.*
+import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationDetailViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationDetailViewModelFactory
+import pjvandamme.be.jocelyn.Presentation.Adapters.JottingsRecyclerAdapter
 import pjvandamme.be.jocelyn.R
 
 class RelationDetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RelationDetailViewModel
+    private var adapter: JottingsRecyclerAdapter? = null
+    private var recyclerView: RecyclerView? = null
+    private var jottingsList: List<Jotting>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +54,23 @@ class RelationDetailActivity : AppCompatActivity() {
                 collapsingToolbar.title = t?.fullName
                 nutshellTextView.text = t?.nutshell
                 monikerTextView.text = "Current moniker: " + t?.currentMoniker
+            }
+        })
+
+        recyclerView = findViewById(R.id.relation_detail_jotting_recycler)
+
+        jottingsList = mutableListOf()
+        adapter = JottingsRecyclerAdapter(this)
+
+        val mLayoutManager = GridLayoutManager(this, 1)
+        recyclerView!!.layoutManager = mLayoutManager
+        recyclerView!!.itemAnimator = DefaultItemAnimator()
+        recyclerView!!.adapter = adapter
+
+        viewModel?.jottings?.observe(this, object: Observer<List<Jotting>>{
+            override fun onChanged(t: List<Jotting>?){
+                jottingsList = t
+                adapter?.updateJottings(jottingsList)
             }
         })
 

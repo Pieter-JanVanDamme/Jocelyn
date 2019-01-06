@@ -4,7 +4,10 @@
     <string name="monikerFormatError">Moniker can only consist of (lowercase) letters, numbers, or any of -_+*/!?@#$%&amp;.
         No spaces are allowed.
     </string>
+
+    <!-- COMPOSE JOTTING -->
     <string name="relSuggHelp">Name or moniker starts with</string>
+    <string name="compose_jotting_save_toast">Saving New Jotting...</string>
 
     <!-- RELATIONS OVERVIEW -->
     <string name="toolbar_relations_overview">Relations</string>
@@ -21,12 +24,16 @@
     <string name="update_relation_fragment_title">Edit Relation Info</string>
     <string name="create_relation_fragment_title">Create New Relation</string>
     <string name="confirm_button">Confirm</string>
+    <string name="create_relation_toast">Saving New Relation...</string>
+    <string name="update_relation_toast">Saving Changes...</string>
 
     <!-- BOTTOM NAV BAR -->
     <string name="relations_overview">Relations</string>
     <string name="compose_jotting">New Jotting</string>
     <string name="create_relation">New Relation</string>
-    <string name="title_activity_relation_detail">RelationDetailActivity</string>
+
+    <!-- RELATION DETAIL -->
+    <string name="title_activity_relation_detail">Relation</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

@@ -15,6 +15,9 @@ interface JottingDao{
     @Query("SELECT * FROM jotting ORDER BY jottingId DESC")
     fun getAllJottings(): LiveData<List<Jotting>>
 
+    @Query("SELECT * FROM jotting AS j JOIN mention AS m ON j.jottingId = m.jottingId WHERE m.relationId = :relId ORDER BY j.created DESC")
+    fun getJottingsByMention(relId: Long): LiveData<List<Jotting>>
+
     @Query("SELECT * FROM jotting WHERE created > :date")
     fun loadAllJottingsMoreRecentThan(date: Date): LiveData<List<Jotting>>
 

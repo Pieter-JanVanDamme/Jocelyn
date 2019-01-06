@@ -276,6 +276,7 @@ class CreateEditRelationFragment : Fragment() {
                 nutshellText.editableText.toString(),
                 0
             ))
+            Toast.makeText(activity?.applicationContext, R.string.create_relation_toast, Toast.LENGTH_SHORT).show()
         }
         else {
             // get the Relation object we're editing, set its attributes, and update the database
@@ -287,6 +288,7 @@ class CreateEditRelationFragment : Fragment() {
                     viewModel.saveChangesToRelation(rel)
                 }
             })
+            Toast.makeText(activity?.applicationContext, R.string.update_relation_toast, Toast.LENGTH_SHORT).show()
         }
         activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
     }
