@@ -1,9 +1,13 @@
 <resources>
     <!-- APPLICATION -->
     <string name="app_name">Jocelyn</string>
+    <string name="intro_text1">Welcome back!</string>
+    <string name="intro_text2">Get jotting, or review your relations...</string>
+    <string name="button_all_relations">Review All Relations</string>
     <string name="monikerFormatError">Moniker can only consist of (lowercase) letters, numbers, or any of -_+*/!?@#$%&amp;.
         No spaces are allowed.
     </string>
+    <string name="latest_jottings_text">Latest Jottings:</string>
 
     <!-- COMPOSE JOTTING -->
     <string name="relSuggHelp">Name or moniker starts with</string>

@@ -33,6 +33,11 @@ class JottingRepository(application: Application){
         return jottingDao.getJottingsByMention(relationId)
     }
 
+    @WorkerThread
+    fun getLatestJottings(count: Int): LiveData<List<Jotting>>{
+        return jottingDao.getLatestJottings(count)
+    }
+
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: JottingDao):
         AsyncTask<Jotting, Void, Void>() {
         override fun doInBackground(vararg params: Jotting): Void? {

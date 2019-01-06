@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="relations_button_padding_left_right">6dp</dimen>
+    <dimen name="intro_text_width">225dp</dimen>
+
     <dimen name="relsugg_listcont_height">30dp</dimen>
     <dimen name="relsugg_listcont_pictureheight">20dp</dimen>
     <dimen name="relsugg_listcont_namewidth">250dp</dimen>
