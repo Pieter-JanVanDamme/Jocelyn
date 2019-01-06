@@ -28,4 +28,13 @@
     <dimen name="create_edit_relation_element_margin">4dp</dimen>
     <dimen name="create_edit_relation_edit_text_width">275dp</dimen>
     <dimen name="create_edit_relation_title_right_margin">15dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="relation_detail_text_size">120dp</dimen>
+    <dimen name="relation_detail_name_moniker">15dp</dimen>
+    <dimen name="relation_detail_nutshell">12dp</dimen>
+    <dimen name="relation_detail_picture_size">80dp</dimen>
+    <dimen name="relation_detail_picture_margin">6dp</dimen>
+    <dimen name="relation_detail_picture_left_margin">12dp</dimen>
+    <dimen name="relation_detail_back_button_space">100dp</dimen>
 </resources>

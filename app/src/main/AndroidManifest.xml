@@ -23,6 +23,11 @@
         </activity>
         <activity android:name=".Presentation.Activities.RelationsOverviewActivity">
         </activity>
+        <activity
+                android:name=".Presentation.Activities.RelationDetailActivity"
+                android:label="@string/title_activity_relation_detail"
+                android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

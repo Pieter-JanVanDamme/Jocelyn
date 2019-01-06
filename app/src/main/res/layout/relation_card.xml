@@ -19,11 +19,12 @@
 
             <ImageView
                     android:id="@+id/thumbnail"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/picture_height"
                     android:layout_height="@dimen/picture_height"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitXY"
+                    android:layout_centerHorizontal="true"/>
 
             <TextView
                     android:id="@+id/title"

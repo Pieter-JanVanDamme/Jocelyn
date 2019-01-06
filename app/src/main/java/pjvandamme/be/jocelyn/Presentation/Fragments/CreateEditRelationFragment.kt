@@ -25,7 +25,7 @@ class CreateEditRelationFragment : Fragment() {
 
     private val maxNameLength = 40
     private val maxMonikerLength = 20
-    private val maxNutshellLength = 175
+    private val maxNutshellLength = 100
     private var currentRelationId: Long? = null
 
     lateinit var titleText: TextView

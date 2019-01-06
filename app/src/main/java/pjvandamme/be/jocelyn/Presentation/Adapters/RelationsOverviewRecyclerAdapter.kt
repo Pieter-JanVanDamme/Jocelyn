@@ -4,6 +4,7 @@ import android.app.Activity
 import android.widget.Toast
 //import sun.security.krb5.internal.KDCOptions.with
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.PopupMenu
@@ -17,6 +18,7 @@ import pjvandamme.be.jocelyn.Presentation.Fragments.RelationSuggestionFragment
 import pjvandamme.be.jocelyn.R
 import android.support.v4.app.FragmentActivity
 import android.util.Log
+import pjvandamme.be.jocelyn.Presentation.Activities.RelationDetailActivity
 import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragmentMode
 
 
@@ -95,7 +97,9 @@ class RelationsOverviewRecyclerAdapter(private val mContext: Context) :
             when (menuItem.itemId) {
                 R.id.action_view_profile -> {
                     Toast.makeText(mContext, R.string.toast_view_profile, Toast.LENGTH_SHORT).show()
-                    // todo
+                    val relationDetailIntent = Intent(mContext, RelationDetailActivity::class.java)
+                    relationDetailIntent.putExtras(getRelationMonikerAsBundle())
+                    mContext.startActivity(relationDetailIntent)
                     return true
                 }
                 R.id.action_edit_information -> {
