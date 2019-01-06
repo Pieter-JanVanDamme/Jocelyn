@@ -49,7 +49,6 @@ abstract class JocelynDatabase: RoomDatabase() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
-            Log.i("pj@", "sRoomDatabaseCallback onOpen called")
             // Delete previous data and repopulate database
             PopulateDbAsync(INSTANCE!!).execute()
         }

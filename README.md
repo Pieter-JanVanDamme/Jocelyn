@@ -1,3 +1,8 @@
+** Warning: clear app data after every use **
+Due to this application being in development, the database will be re-populated every time the app is launched. To prevent any crashes, make sure to clear all app data by navigating to Settings, option 'Apps', choosing Jocelyn, option 'Storage', and by choosing 'clear data'.
+
+
+
 # Jocelyn
 
 
