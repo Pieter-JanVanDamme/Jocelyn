@@ -1,5 +1,8 @@
 package pjvandamme.be.jocelyn.Presentation.Adapters
 
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_relationsuggestion.view.*
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.Presentation.Fragments.RelationSuggestionFragment.OnListFragmentInteractionListener
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Presentation.Activities.RelationDetailActivity
 
 /**
  * [RecyclerView.Adapter] that can display a [Relation] and makes a call to the
@@ -17,6 +21,7 @@ import pjvandamme.be.jocelyn.Domain.Models.Relation
  * TODO: Replace the implementation with code for your data type.
  */
 class MyRelationSuggestionRecyclerViewAdapter(
+    private val mContext: Context?,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyRelationSuggestionRecyclerViewAdapter.ViewHolder>() {
 
@@ -44,6 +49,13 @@ class MyRelationSuggestionRecyclerViewAdapter(
         // TODO: implement custom pictures
         holder.relPicture.setImageResource(R.drawable._default)
         holder.relName.text = relation.getSuggestionName()
+        holder.relDetails.setOnClickListener {
+            var args = Bundle()
+            args.putLong("relationId", relation.relationId)
+            val relationDetailIntent = Intent(mContext, RelationDetailActivity::class.java)
+            relationDetailIntent.putExtras(args)
+            mContext?.startActivity(relationDetailIntent)
+        }
 
         with(holder.view) {
             tag = relation
@@ -56,6 +68,7 @@ class MyRelationSuggestionRecyclerViewAdapter(
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val relPicture: ImageView = view.suggestionPicture
         val relName: TextView = view.suggestionName
+        val relDetails: ImageView = view.suggestionBtn
     }
 
     fun updateRelationSuggestions(newSuggestions: List<Relation>?){

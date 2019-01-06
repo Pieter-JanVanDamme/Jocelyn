@@ -65,7 +65,7 @@ class RelationSuggestionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_relationsuggestion_list, container, false)
-        viewAdapter = MyRelationSuggestionRecyclerViewAdapter(listener)
+        viewAdapter = MyRelationSuggestionRecyclerViewAdapter(activity?.applicationContext, listener)
 
         // Set the adapter
         if (view is RecyclerView) {
