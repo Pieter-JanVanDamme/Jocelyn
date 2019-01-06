@@ -2,6 +2,8 @@
 
 
 
+**By Pieter-Jan Van Damme**
+
 **Proof of Concept**
 
 
@@ -24,12 +26,59 @@ Romans politicians had their nomenclatores. Modern politicians have their Farley
 You will have Jocelyn.
 
 
+
 ## Dictionary
 
-**Jotting**:
+**Jotting**: a quick note written about 'relations', i.e. the people you care about. These notes can contain any kind of information: an upcoming event, gift ideas, thoughts about their personalities, an interaction they've had with someone else etc.
 
-**Moniker**:
+**Relation**: a person you care about. Jocelyn allows you to add all the people you care about and add a short description for your convience.
 
-**Mention**:
+**Moniker**: every Relation has a "moniker"... a unique nickname consisting of letters or numbers (no spaces or special characters). Using this, Relations can be 'mentioned' in Jottings.
 
-**Relation**:
+**Mention**: using the '@'-character followed by a Relation's moniker in a Jotting, 'mentions' that Relation. This Jotting will then appear in that Relation's list of Jottings when you view their profile.
+
+
+## How to Use Jocelyn
+
+
+### 1. The Home Screen
+
+The home screen will show you your latest jottings, so you always have a quick overview to glance at. From the home screen, you can launch 2 activities:
+
+ 1. Add Jotting, using the action button at the bottom right.
+ 2. Consult the relation overview.
+
+
+### 2. Add Jotting
+
+Jottings are simple written notes, that you can start typing right away. Using the '@'-character will prompt a drop-down list of Relations whose name or moniker match what you're typing. These Relations are ordered by number of mentions they have in other Jottings, so when typing the '@'-character you'll first get a list of your most popular Relations.
+
+Clicking on the 'eye'-icon of any Relation in the Relation suggestion drop-down list will take you to their personal page (see 4. Relation Detail).
+
+
+### 3. Relation Overview
+
+The relation overview shows all of your Relations as cards, ordered by number of mentions. By clicking on the overflow icon (3 dots), you can take 2 actions with regards to a Relation:
+
+ 1. View their information and jottings (ordered by date, most recent first).
+ 2. Update their information (name, current moniker, or description).
+
+You can also use the action button at the bottom right to create a new Relation.
+
+
+### 4. Relation Detail
+
+The Relatoin Detail activity shows a particular Relation's full name, current moniker, and description in the app bar. Below you'll find a list of Jottings where they are a Mention, sorted chronologically with the most recent Jottings appearing at the top.
+
+
+### 5. Create/Edit Relation
+
+In the Relation Overview, it's possible to either create or edit a relation. To create a Relation, tap the floating action bottom in the bottom right. To update an existing Relation, click the overflow menu and choose 'Edit Relation Info'.
+
+A Relation has:
+
+ 1. A Full Name of at most 40 characters.
+ 2. A unique Moniker consisting of only letters or numbers and at most 20 characters
+ 3. An optional description.
+
+Warnings will let you know if you're not sticking to those rules.
