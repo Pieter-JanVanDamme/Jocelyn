@@ -18,7 +18,9 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationsOverviewViewModel
 import pjvandamme.be.jocelyn.Presentation.Adapters.RelationsOverviewRecyclerAdapter
 import pjvandamme.be.jocelyn.Presentation.Fragments.CreateEditRelationFragment
@@ -55,7 +57,8 @@ class RelationsOverviewActivity : AppCompatActivity() {
         recyclerView!!.adapter = adapter
 
         // initialize viewmodel
-        relationsOverviewViewModel = RelationsOverviewViewModel(this.application)
+        relationsOverviewViewModel = RelationsOverviewViewModel(this.application,
+            RelationRepository(application, JocelynDatabase.getJocelynDatabase(application)!!.relationDao()))
 
         // set observer to LiveData change
         relationsOverviewViewModel?.allRelations?.observe(this, object: Observer<List<Relation>> {

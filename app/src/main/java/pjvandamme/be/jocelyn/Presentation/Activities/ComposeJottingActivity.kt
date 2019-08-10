@@ -15,15 +15,19 @@ import android.text.style.TextAppearanceSpan
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.JottingRepository
+import pjvandamme.be.jocelyn.Domain.Repositories.MentionRepository
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.ComposeJottingViewModel
 import pjvandamme.be.jocelyn.Presentation.Fragments.RelationSuggestionFragment
 import pjvandamme.be.jocelyn.R
 import java.util.*
 
 /**
- * The compose jotting activity, which allows the user to draft a new jotting and insert Mentions as needed.
+ * The compose jotting activity, which allows the user to draft a new jotting and insertAndGenerateId Mentions as needed.
  * The activity will style these mentions to make them stand out.
  * The activity will also call on RelationSuggestionFragment to make suggestions when the user is typing Mentions (which
  * start with the 'mention character' (usually '@').
@@ -49,7 +53,12 @@ class ComposeJottingActivity : AppCompatActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // initialize ComposeJottingViewModel
-        composeJottingViewModel = ComposeJottingViewModel(this.application)
+        composeJottingViewModel = ComposeJottingViewModel(
+            this.application,
+            JottingRepository(this.application, JocelynDatabase.getJocelynDatabase(this.application)!!.jottingDao()),
+            RelationRepository(this.application, JocelynDatabase.getJocelynDatabase(this.application)!!.relationDao()),
+            MentionRepository(this.application, JocelynDatabase.getJocelynDatabase(this.application)!!.mentionDao())
+        )
 
         // initialize fragmentmanager
         val fragMan: FragmentManager = this.supportFragmentManager
@@ -179,7 +188,7 @@ class ComposeJottingActivity : AppCompatActivity(),
 
         val editTextField: EditText = findViewById(R.id.editJottingContent)
 
-        // insert the mention for the relation selected
+        // insertAndGenerateId the mention for the relation selected
         var selStart: Int = editTextField.selectionStart
         var selEnd: Int = editTextField.selectionEnd
         replaceWordAtCursor(editTextField, relation?.currentMoniker, selStart, selEnd)

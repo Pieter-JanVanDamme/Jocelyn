@@ -13,7 +13,9 @@ import android.support.v7.widget.RecyclerView
 import pjvandamme.be.jocelyn.R
 import pjvandamme.be.jocelyn.R.id.*
 import android.widget.Button
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
+import pjvandamme.be.jocelyn.Domain.Repositories.JottingRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.HomeViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.HomeViewModelFactory
 import pjvandamme.be.jocelyn.Presentation.Adapters.JottingsRecyclerAdapter
@@ -50,7 +52,11 @@ class HomeActivity : AppCompatActivity() {
         /**************************************************************************************************************/
 
         viewModel = ViewModelProviders
-            .of(this, HomeViewModelFactory(application, recentJottingCount))
+            .of(this, HomeViewModelFactory(
+                application,
+                recentJottingCount,
+                JottingRepository(this.application, JocelynDatabase.getJocelynDatabase(this.application)!!.jottingDao())
+            ))
             .get(HomeViewModel::class.java)
 
         recyclerView = findViewById(R.id.home_latest_jottings_recycler)

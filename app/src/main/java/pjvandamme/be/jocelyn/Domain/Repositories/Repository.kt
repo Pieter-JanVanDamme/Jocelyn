@@ -1,10 +1,22 @@
 package pjvandamme.be.jocelyn.Domain.Repositories
 
+import android.arch.lifecycle.LiveData
+
 interface Repository<T, K> {
-    fun getById(id: K): T
-    fun getAll(): List<T>
-    fun add(entity: T)
-    fun addRange(entities: List<T>)
-    fun remove(entity: T)
-    fun removeRange(entities: List<T>)
+    // GET
+    fun getById(id: K): LiveData<T>
+    fun getAll(): LiveData<List<T>>
+
+    // INSERT
+    fun insert(entity: T)
+    //fun insertRange(entities: List<T>)
+
+    // UPDATE
+    fun update(entity: T)
+    //fun updateRange(entities: List<T>)
+
+    // DELETE
+    fun delete(entity: T)
+    //fun deleteRange(entities: List<T>)
+    fun deleteAll()
 }

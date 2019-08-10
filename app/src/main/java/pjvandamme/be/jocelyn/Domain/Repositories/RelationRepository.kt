@@ -7,46 +7,62 @@ import android.support.annotation.WorkerThread
 import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Data.Persistence.RelationDao
 import pjvandamme.be.jocelyn.Domain.Models.Relation
-import java.util.*
 
-class RelationRepository(application: Application){
-    private val relationDao: RelationDao
+class RelationRepository(application: Application, private val relationDao: RelationDao) : IRelationRepository<Relation, Long> {
+    //private val relationDao: RelationDao
     val relations: LiveData<List<Relation>>
 
     init {
-        val jocelynRoomDatabase = JocelynDatabase.getJocelynDatabase(application)
-        relationDao = jocelynRoomDatabase?.relationDao()!!
-        relations = relationDao?.getAllRelations()
+        //val jocelynRoomDatabase = JocelynDatabase.getJocelynDatabase(application)
+        //relationDao = jocelynRoomDatabase?.relationDao()!!
+        relations = relationDao?.getAll()
+    }
+
+    // GET
+    @WorkerThread
+    override fun getById(id: Long): LiveData<Relation>{
+        return relationDao.getById(id)
     }
 
     @WorkerThread
-    fun getAllRelations(): LiveData<List<Relation>>{
-        return relationDao.getAllRelations()
+    override fun getAll(): LiveData<List<Relation>>{
+        return relationDao.getAll()
     }
 
+    // INSERT
     @WorkerThread
-    fun insert(relation: Relation){
+    override fun insert(relation: Relation){
         relationDao.insert(relation)
     }
 
+
+    // UPDATE
     @WorkerThread
-    fun update(relation: Relation) {
+    override fun update(relation: Relation) {
         relationDao.update(relation)
     }
 
+    // DELETE
     @WorkerThread
-    fun getByRelationId(id: Long): LiveData<Relation>{
-        return relationDao.getByRelationId(id)
+    override fun delete(relation: Relation) {
+        relationDao.delete(relation)
     }
 
     @WorkerThread
-    fun getByCurrentMoniker(search: String): LiveData<Relation>{
+    override fun deleteAll(){
+        relationDao.deleteAll()
+    }
+
+
+    //MONIKER
+    @WorkerThread
+    override fun getByCurrentMoniker(search: String): LiveData<Relation>{
         return relationDao.getByCurrentMoniker(search)
     }
 
     @WorkerThread
-    fun getRelationsFullNameOrCurrentMonikerLike(search: String): LiveData<List<Relation>> {
-        return relationDao.getRelationsFullNameOrCurrentMonikerLike(search)
+    override fun getWhereFullNameOrCurrentMonikerLike(search: String): LiveData<List<Relation>> {
+        return relationDao.getWhereFullNameOrCurrentMonikerLike(search)
     }
 
     private class insertAsyncTask internal constructor(private val mAsyncTaskDao: RelationDao):

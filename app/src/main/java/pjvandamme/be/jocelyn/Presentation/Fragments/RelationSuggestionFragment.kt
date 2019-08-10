@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationSuggestionViewModelFactory
 import pjvandamme.be.jocelyn.Presentation.Adapters.MyRelationSuggestionRecyclerViewAdapter
@@ -50,8 +52,10 @@ class RelationSuggestionFragment : Fragment() {
 
         // uses RelationSuggestionViewModelFactory to be able to set the searchstring
         // in the RelationSuggestionViewModel
+        var application = activity?.application!!
         relationSuggestionViewModel = ViewModelProviders
-            .of(this, RelationSuggestionViewModelFactory(activity?.application!!, searchString))
+            .of(this, RelationSuggestionViewModelFactory(application, searchString,
+                RelationRepository(application, JocelynDatabase.getJocelynDatabase(application)!!.relationDao())))
             .get(RelationSuggestionViewModel::class.java)
 
         arguments?.let {

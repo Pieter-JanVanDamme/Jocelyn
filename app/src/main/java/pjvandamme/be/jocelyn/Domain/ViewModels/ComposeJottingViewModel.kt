@@ -3,31 +3,23 @@ package pjvandamme.be.jocelyn.Domain.ViewModels
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import android.os.AsyncTask
-import android.text.SpannableString
-import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Mention
 import pjvandamme.be.jocelyn.Domain.Models.Relation
-import pjvandamme.be.jocelyn.Domain.Repositories.JottingRepository
-import pjvandamme.be.jocelyn.Domain.Repositories.MentionRepository
-import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
+import pjvandamme.be.jocelyn.Domain.Repositories.*
 
-class ComposeJottingViewModel(application: Application) : AndroidViewModel(application) {
-    private val jottingRepository: JottingRepository
-    private val relationRepository: RelationRepository
-    private val mentionRepository: MentionRepository
+class ComposeJottingViewModel(application: Application,
+                              private val jottingRepository: IJottingRepository<Jotting, Long>,
+                              private val relationRepository: IRelationRepository<Relation, Long>,
+                              private val mentionRepository: IMentionRepository<Mention, Long>
+) : AndroidViewModel(application) {
     val relations: LiveData<List<Relation>>
     val jottings: LiveData<List<Jotting>>
 
     init {
-        jottingRepository = JottingRepository(application)
-        relationRepository = RelationRepository(application)
-        mentionRepository = MentionRepository(application)
-        relations = relationRepository.getAllRelations()
-        jottings = jottingRepository.getAllJottings()
+        relations = relationRepository.getAll()
+        jottings = jottingRepository.getAll()
     }
 
     fun addNewJotting(jotting: Jotting, mentions: List<Relation>?) {
@@ -38,7 +30,7 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
 
     /**
      * AddNewJottingAsyncTask is a subclass of AsyncTask that allows us to add a new Jotting to the database, get its
-     * id, and use that id to create and insert the necessary Mentions. These operations should be handled on a
+     * id, and use that id to create and insertAndGenerateId the necessary Mentions. These operations should be handled on a
      * separate thread to avoid locking the UI.
      *
      * @param jottingRepository The JottingRepository responsible for handling database interactions regarding Jotting
@@ -48,15 +40,15 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
      * @param mentions A list of relations that are to be inserted as mentions for the new Jotting.
      */
     private class AddNewJottingAsyncTask(
-        private val jottingRepository: JottingRepository,
-        private val mentionRepository: MentionRepository,
-        private val relationRepository: RelationRepository,
+        private val jottingRepository: IJottingRepository<Jotting, Long>,
+        private val mentionRepository: IMentionRepository<Mention, Long>,
+        private val relationRepository: IRelationRepository<Relation, Long>,
         private val mentions: List<Relation>?
     ) : AsyncTask<Jotting, Void, Long>() {
 
-        // insert the new Jotting and get its id as a return value
+        // insertAndGenerateId the new Jotting and get its id as a return value
         override fun doInBackground(vararg jottings: Jotting): Long? {
-            val newJottingId = jottingRepository.insert(jottings[0])
+            val newJottingId = jottingRepository.insertAndGenerateId(jottings[0])
             return newJottingId
         }
 
@@ -84,10 +76,10 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
      * objects.
      */
     private class AddNewMentionAsyncTask(
-        private val mentionRepository: MentionRepository
+        private val mentionRepository: IMentionRepository<Mention, Long>
     ) : AsyncTask<Mention, Void, Void>() {
 
-        // insert the new Mention
+        // insertAndGenerateId the new Mention
         override fun doInBackground(vararg mentions: Mention): Void?{
             mentionRepository.insert(mentions[0])
             return null
@@ -103,10 +95,10 @@ class ComposeJottingViewModel(application: Application) : AndroidViewModel(appli
      * Relation objects.
      */
     private class UpdateRelationAsyncTask(
-        private val relationRepository: RelationRepository
+        private val relationRepository: IRelationRepository<Relation, Long>
     ) : AsyncTask<Relation, Void, Void>() {
 
-        // insert the new Mention
+        // insertAndGenerateId the new Mention
         override fun doInBackground(vararg relations: Relation): Void?{
             relationRepository.update(relations[0])
             return null

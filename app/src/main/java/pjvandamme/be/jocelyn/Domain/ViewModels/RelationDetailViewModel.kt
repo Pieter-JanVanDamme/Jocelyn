@@ -5,20 +5,24 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.IJottingRepository
+import pjvandamme.be.jocelyn.Domain.Repositories.IRelationRepository
 import pjvandamme.be.jocelyn.Domain.Repositories.JottingRepository
 import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 
-class RelationDetailViewModel(application: Application, relationId: Long) : AndroidViewModel(application) {
-    val relationRepository: RelationRepository
-    val jottingRepository: JottingRepository
+class RelationDetailViewModel(application: Application,
+                              relationId: Long,
+                              private val relationRepository: IRelationRepository<Relation, Long>,
+                              private val jottingRepository: IJottingRepository<Jotting, Long>
+) : AndroidViewModel(application) {
+    //val jottingRepository: JottingRepository
     var relation: LiveData<Relation>
     var jottings: LiveData<List<Jotting>>
 
 
     init{
-        relationRepository = RelationRepository(application)
-        jottingRepository = JottingRepository(application)
-        relation = relationRepository.getByRelationId(relationId)
+        //jottingRepository = JottingRepository(application)
+        relation = relationRepository.getById(relationId)
         jottings = jottingRepository.getJottingsByMention(relationId)
     }
 }

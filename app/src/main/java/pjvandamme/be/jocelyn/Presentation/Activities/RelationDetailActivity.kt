@@ -12,8 +12,11 @@ import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_relation_detail.*
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Jotting
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.JottingRepository
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationDetailViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.RelationDetailViewModelFactory
 import pjvandamme.be.jocelyn.Presentation.Adapters.JottingsRecyclerAdapter
@@ -40,7 +43,11 @@ class RelationDetailActivity : AppCompatActivity() {
         var relationMoniker = extras.getLong("relationId")
 
         viewModel = ViewModelProviders
-            .of(this, RelationDetailViewModelFactory(application, relationMoniker))
+            .of(this, RelationDetailViewModelFactory(application,
+                relationMoniker,
+                RelationRepository(application, JocelynDatabase.getJocelynDatabase(application)!!.relationDao()),
+                JottingRepository(application, JocelynDatabase.getJocelynDatabase(application)!!.jottingDao())
+            ))
             .get(RelationDetailViewModel::class.java)
 
         // set observer to LiveData change

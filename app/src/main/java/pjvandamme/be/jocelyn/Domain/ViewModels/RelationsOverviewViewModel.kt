@@ -6,13 +6,14 @@ import android.arch.lifecycle.LiveData
 import pjvandamme.be.jocelyn.Domain.Models.Relation
 import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 
-class RelationsOverviewViewModel(application: Application): AndroidViewModel(application){
-    private val relationRepository: RelationRepository = RelationRepository(application)
+class RelationsOverviewViewModel(application: Application,
+                                 private val relationRepository: RelationRepository
+): AndroidViewModel(application){
     internal val allRelations: LiveData<List<Relation>>
 
 
     init {
-        allRelations = relationRepository.getAllRelations()
+        allRelations = relationRepository.getAll()
     }
 
 }

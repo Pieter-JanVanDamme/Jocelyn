@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import pjvandamme.be.jocelyn.Data.Persistence.JocelynDatabase
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 import pjvandamme.be.jocelyn.Domain.ViewModels.CreateEditRelationViewModel
 import pjvandamme.be.jocelyn.Domain.ViewModels.CreateEditRelationViewModelFactory
 import pjvandamme.be.jocelyn.R
@@ -44,8 +46,13 @@ class CreateEditRelationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
+        var app = activity?.application!!
+
         viewModel = ViewModelProviders
-            .of(this, CreateEditRelationViewModelFactory(activity?.application!!, null))
+            .of(this, CreateEditRelationViewModelFactory(
+                app, null,
+                RelationRepository(app, JocelynDatabase.getJocelynDatabase(app)!!.relationDao())
+                ))
             .get(CreateEditRelationViewModel::class.java)
 
 

@@ -5,22 +5,24 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
 import pjvandamme.be.jocelyn.Domain.Models.Relation
+import pjvandamme.be.jocelyn.Domain.Repositories.IRelationRepository
 import pjvandamme.be.jocelyn.Domain.Repositories.RelationRepository
 
-class CreateEditRelationViewModel(application: Application, initRelation: Relation?) : AndroidViewModel(application) {
-    val relationRepository: RelationRepository
+class CreateEditRelationViewModel(application: Application,
+                                  initRelation: Relation?,
+                                  private val relationRepository: IRelationRepository<Relation, Long>
+                                  ) : AndroidViewModel(application) {
     var relationInFragment: LiveData<Relation>? = null
     var relationWithMoniker: LiveData<Relation>
 
     init {
-        relationRepository = RelationRepository(application)
         if(initRelation != null)
-            relationInFragment = relationRepository.getByRelationId(initRelation.relationId)
+            relationInFragment = relationRepository.getById(initRelation.relationId)
         relationWithMoniker = relationRepository.getByCurrentMoniker("")
     }
 
     fun setRelationInFragment(id: Long){
-        relationInFragment = relationRepository.getByRelationId(id)
+        relationInFragment = relationRepository.getById(id)
     }
 
     fun setRelationWithMoniker(moniker: String){
@@ -36,10 +38,10 @@ class CreateEditRelationViewModel(application: Application, initRelation: Relati
     }
 
     private class UpdateRelationAsyncTask(
-        private val relationRepository: RelationRepository
+        private val relationRepository: IRelationRepository<Relation, Long>
     ) : AsyncTask<Relation, Void, Void>() {
 
-        // insert the new Mention
+        // insertAndGenerateId the new Mention
         override fun doInBackground(vararg relations: Relation): Void?{
             relationRepository.update(relations[0])
             return null
@@ -47,10 +49,10 @@ class CreateEditRelationViewModel(application: Application, initRelation: Relati
     }
 
     private class InsertRelationAsyncTask(
-        private val relationRepository: RelationRepository
+        private val relationRepository: IRelationRepository<Relation, Long>
     ) : AsyncTask<Relation, Void, Void>() {
 
-        // insert the new Mention
+        // insertAndGenerateId the new Mention
         override fun doInBackground(vararg relations: Relation): Void?{
             relationRepository.insert(relations[0])
             return null
